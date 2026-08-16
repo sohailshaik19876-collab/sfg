@@ -1,28 +1,38 @@
 # SFG Sports Academy — Website
 
-Website for **Skill For Glory Sporting Academy**, Nerli, Nanded — swimming pool,
-shooting range, cricket turf and football turf.
+Website for **Skill For Glory Sporting Academy**, Nerli–Puyani, Nanded — the sports
+promotion sector of All India Technoskills' Organization.
 
-Plain static HTML, CSS and JavaScript. No build step, no framework, no dependencies —
-open a file in a browser and it works, and any host will serve it.
+Plain static HTML, CSS and JavaScript. No build step, no framework, no dependencies.
+
+Content on the site is taken from the academy's own **Organization Profile** document —
+registration details, mission, vision, aim, the affiliation programme, certification
+initiatives, the seven-step process and the leadership section all come from there.
 
 ## Pages
 
 | File | Purpose |
 |---|---|
-| `index.html` | Home — hero, facilities overview, why-us, programmes, how to join, testimonials |
-| `facilities.html` | Detail sections for pool, range, cricket turf, football turf + on-campus amenities |
-| `programs.html` | Coaching batches, weekly timetable, fee structure, hourly turf booking |
-| `about.html` | Story, values, coaching team, safety and hygiene standards |
+| `index.html` | Home — hero, recognition, facilities, services, why-us, process, founder, testimonials |
+| `facilities.html` | Swimming pool, shooting range, cricket turf, football turf + campus amenities |
+| `programs.html` | Who we train, coaching batches, weekly timetable, fees, hourly turf booking |
+| `services.html` | Pool/turf/range construction, school affiliation, outsourced PE, certification |
+| `about.html` | Story, registration & recognition, mission/vision/aim, leadership, coaching team |
 | `gallery.html` | Photo grid with click-to-zoom lightbox |
 | `contact.html` | Enquiry form, map, opening hours, FAQs |
 
 ```
 assets/
-  css/styles.css   — full design system (brand tokens, components, responsive rules)
-  js/main.js       — nav, scroll reveal, counters, lightbox, photo fallback, form
-  img/logo.svg     — academy emblem
+  css/styles.css   — design system (brand tokens, components, animations, responsive)
+  js/main.js       — nav, scroll progress, reveals, counters, marquee, lightbox, form
+  img/logo.svg     — vector fallback of the academy emblem
+vercel.json        — caching, security headers, tidy-URL redirects
 ```
+
+## Typography
+
+The whole site uses **Poppins** and nothing else — weights 300–800, loaded from Google
+Fonts with a system-font fallback so the layout still holds if that request is blocked.
 
 ## Preview locally
 
@@ -30,89 +40,117 @@ assets/
 python3 -m http.server 8000     # then open http://localhost:8000
 ```
 
-## Deploy
+## Deploy (Vercel)
 
-**GitHub Pages** — Settings → Pages → Source: *Deploy from a branch* → pick this branch,
-folder `/ (root)`. Live in about a minute.
+No build step required.
 
-**Netlify / Vercel / Cloudflare Pages** — drag the folder in, or connect the repo.
-Build command: *none*. Publish directory: `/`.
+1. Vercel dashboard → **Add New → Project** → import `sohailshaik19876-collab/sfg`.
+2. Framework preset: **Other**. Build command: *leave empty*. Output directory: *leave empty*.
+3. Deploy. Every push redeploys automatically; pull requests get preview URLs.
 
-**Any shared host** — upload the files by FTP as they are.
+```bash
+npm i -g vercel
+vercel          # preview deployment
+vercel --prod   # production
+```
+
+`vercel.json` sets year-long caching on `/assets/*`, adds standard security headers, and
+redirects extensionless paths (`/contact`, `/services`, `/programmes`) to the right page.
+
+**Custom domain:** Vercel → Project → Settings → Domains. The site's canonical URL is
+already set to `https://skillforglory.in/`.
 
 ---
 
-## Before you publish — please update these
+## Photos — 24 slots waiting for your images
 
-Everything below is **real and confirmed**: the academy name, the address, the phone
-number (096651 03220), and the four sports. The items below are sensible defaults I
-filled in so the site reads as complete — check each one and correct anything that
-does not match how you actually operate.
+Five photographs you supplied are already live across the site: the campus banner, the
+swimming pool, the shooting range, the cricket turf, and the Managing Director's portrait.
 
-1. **Opening hours** — currently *daily, 6:00 AM – 9:00 PM*. Appears in the top bar,
-   the footer, `contact.html` and the structured data in `index.html`.
-2. **Batch timings** — the weekly table in `programs.html` (`#timetable`) is a plausible
-   schedule, not your real one. Replace it with your actual batch times.
-3. **Fees** — the fee table in `programs.html` (`#fees`) deliberately says *"On request"*
-   rather than inventing prices. Put your real rates in when you are ready.
-4. **Coaching team** — `about.html` (`#coaches`) uses role titles only ("Head Coach —
-   Swimming"), with no invented names or credentials. Add the real names and
-   qualifications.
-5. **Testimonials** — the three quotes on the home page are illustrative and
-   attributed generically ("Parent, Junior Swimming"). **Replace them with real
-   reviews, or delete the section**, before going live.
-6. **Age ranges and programme details** — check the ages in `programs.html` match who
-   you actually take.
-7. **Domain** — `index.html` has `<link rel="canonical" href="https://sfgsportsacademy.in/">`
-   and an `og:url`. Point these at your real domain once you have one.
-8. **Social links** — the footer currently links to WhatsApp, Google Maps and phone.
-   Add Instagram/Facebook when you have them.
+The frames below are **reserved and styled but empty**. Until you supply a file, each one
+shows a branded gradient, a sport icon and a small *"Your photo here"* label — never a
+broken image. To fill one: save your photo at the exact path shown and redeploy. No code
+change needed.
 
-## Using your original logo file
+| File to supply | Used on | What it should show |
+|---|---|---|
+| `assets/img/football-turf.jpg` | index, facilities | The football turf — the main hero shot for it |
+| `assets/img/football-02.jpg` | facilities | Five-a-side match on the turf |
+| `assets/img/football-03.jpg` | facilities | Junior football coaching session |
+| `assets/img/pool-02.jpg` | facilities | Swimming coaching in progress |
+| `assets/img/pool-03.jpg` | facilities | Changing rooms / pool deck |
+| `assets/img/range-02.jpg` | facilities | Shooters on the firing line |
+| `assets/img/range-03.jpg` | facilities | Target scoring after a relay |
+| `assets/img/cricket-02.jpg` | facilities | Batting practice in the nets |
+| `assets/img/cricket-03.jpg` | facilities | Evening match under floodlights |
+| `assets/img/construction-02.jpg` | services | Turf laying in progress |
+| `assets/img/construction-03.jpg` | services | Shooting range under construction |
+| `assets/img/school-sports.jpg` | services | A school sports session run by SFG coaches |
+| `assets/img/coach-swimming.jpg` | about | Head swimming coach |
+| `assets/img/coach-shooting.jpg` | about | Range officer |
+| `assets/img/coach-cricket.jpg` | about | Head cricket coach |
+| `assets/img/coach-football.jpg` | about | Head football coach |
+| `assets/img/gallery-01.jpg` … `gallery-08.jpg` | gallery | Eight free-choice photos — turf, batches, events, prize days |
 
-The emblem in `assets/img/logo.svg` is a hand-built vector recreation of your logo — it
-stays sharp at any size and loads instantly, but it is a redraw, not your original file.
+**Recommended:** landscape, at least 1400px wide, JPEG, under ~400KB each. Portraits for
+the coach cards can be square. Keep the `alt` text in the HTML descriptive if you change
+what a photo shows — it matters for search ranking and screen readers.
 
-To use your actual artwork instead, save it as `assets/img/logo.png` and run:
+## The logo
+
+Header, footer and social-share images use the logo you supplied:
+`https://cdn.fitimg.in/studios/studio1779686291-jqatzyfwvochbxkngok5.jpg`
+
+If that URL is ever unreachable, every `<img>` falls back automatically to
+`assets/img/logo.svg`, a vector recreation of the emblem, so the header never renders
+empty. The browser-tab icon uses the SVG, because it stays crisp at 16px.
+
+**Recommended: host it yourself.** Serving your main brand asset from another company's
+CDN means your site breaks if they move the file. Save it to `assets/img/logo.png`, then:
 
 ```bash
-grep -rl 'assets/img/logo.svg' . --include='*.html' \
-  | xargs sed -i 's|assets/img/logo.svg|assets/img/logo.png|g'
+grep -rl 'cdn.fitimg.in' . --include='*.html' \
+  | xargs sed -i 's|https://cdn.fitimg.in/studios/studio1779686291-jqatzyfwvochbxkngok5.jpg|assets/img/logo.png|g'
 ```
 
-Use a transparent-background PNG of at least 512×512 for a crisp result.
+The logo slots are aspect-ratio agnostic — fixed height, width follows — so a square
+emblem and a wide wordmark both render without stretching.
 
-## Swapping in your own photos
+---
 
-The site currently uses stock sports photography from Unsplash, loaded directly from
-their servers. **Replace these with real photos of your pool, range and turfs as soon
-as you can** — nothing sells a local academy like pictures of the actual ground.
+## Before you publish — please check these
 
-Every photo sits inside a `.media` wrapper:
+Confirmed from your Organization Profile and used as fact: the registration details,
+mission, vision, aim, affiliation programme, certification initiatives, the seven-step
+process, the leadership names, and all contact details.
 
-```html
-<div class="media media--swim">
-  <img src="https://images.unsplash.com/photo-..." alt="...">
-  <span class="media__fallback">…</span>
-</div>
-```
+These are **my defaults, not your data** — please correct anything that is wrong:
 
-Drop your photos into `assets/img/` and change each `src` to e.g. `assets/img/pool-1.jpg`.
-Keep the `alt` text descriptive — it matters for search ranking and for screen readers.
-
-**If a photo ever fails to load**, `main.js` removes the broken image and reveals the
-branded gradient plus a sport icon underneath, so a visitor never sees a broken-image
-box. The gradient is chosen by the wrapper class: `media--swim`, `media--shoot`,
-`media--cricket`, `media--turf`, `media--navy`.
+1. **Opening hours** — currently *daily, 6:00 AM – 9:00 PM*. Appears in the header,
+   footer, `contact.html` and the structured data.
+2. **Batch timings** — the weekly table in `programs.html` (`#timetable`) is a plausible
+   schedule, not your real one.
+3. **Fees** — deliberately left as *"On request"* rather than inventing prices.
+4. **Coach names** — `about.html` (`#coaches`) uses role titles only, with no invented
+   names or credentials. Add the real ones.
+5. **Testimonials** — the three quotes on the home page are illustrative, attributed
+   generically. **Replace with real reviews or delete the section** before going live.
+6. **Founder photo** — used on `index.html` and `about.html#leadership` labelled as
+   *Mohammed Asif Umar, Managing Director*. Confirm the photograph is of him and not of
+   Mr. Mohammed Arif, the Founder President of AITO, whose message appears separately
+   further down the About page.
+7. **Social links** — footer points at `/Skillforglory` on Facebook, Instagram and
+   YouTube. Correct the handles if any differ.
+8. **Age ranges** in `programs.html` — check they match who you actually take.
 
 ## The enquiry form
 
-The site is static, so there is no server to receive submissions. As shipped, the form
-on `contact.html` validates the input and opens **WhatsApp** with the enquiry pre-filled
-to `+91 96651 03220` — the visitor presses send and it reaches you as a normal message.
+The site is static, so there is no server to receive submissions. As shipped, the form on
+`contact.html` validates input and opens **WhatsApp** with the enquiry pre-filled to
+`+91 96651 03220` — the visitor presses send and it arrives as a normal message.
 
-To send enquiries to email instead, sign up with a form service such as Formspree,
-then edit the form tag in `contact.html`:
+To send enquiries to email instead, sign up with a form service such as Formspree and
+edit the form tag in `contact.html`:
 
 ```html
 <form id="enquiry-form" method="POST" action="https://formspree.io/f/YOUR_ID"
@@ -120,16 +158,23 @@ then edit the form tag in `contact.html`:
 ```
 
 Once `data-endpoint` is present, `main.js` steps aside and the browser posts normally.
-To change the WhatsApp number instead, edit `data-whatsapp` on the same form.
+To change the WhatsApp number, edit `data-whatsapp` on the same form.
+
+## Motion & scrolling
+
+- Scroll progress bar across the top, driven by `requestAnimationFrame`.
+- Staggered reveal on scroll — fade-up, slide-left, slide-right and scale variants.
+- Animated hero entrance and counting statistics.
+- Continuous sports marquee listing every discipline (pauses on hover).
+- Smooth in-page anchor scrolling with the sticky header height accounted for.
+- **All of it is disabled** under `prefers-reduced-motion: reduce`, so visitors who get
+  motion sickness see a static, fully readable page.
 
 ## Notes
 
-- **Responsive** from 320px up; tested at mobile and desktop widths with no horizontal
-  scroll.
+- **Responsive** from 320px up; verified at mobile and desktop widths with no horizontal
+  scroll on any page.
 - **Accessible** — skip link, keyboard-operable nav and lightbox, visible focus rings,
-  labelled form fields, `alt` on every image, and `prefers-reduced-motion` respected.
+  labelled form fields, `alt` on every image.
 - **SEO** — per-page titles and descriptions, Open Graph tags, `SportsActivityLocation`
-  structured data on the home page and `FAQPage` data on the contact page, so the
-  academy can show up properly in local search.
-- **Fonts** load from Google Fonts with a system-font fallback, so the site still renders
-  correctly if that request is blocked.
+  structured data with parent organisation and founder, and `FAQPage` data on contact.

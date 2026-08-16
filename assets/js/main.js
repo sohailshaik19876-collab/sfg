@@ -63,7 +63,7 @@
 
   /* ---- 4. Scroll reveal -------------------------------------------------- */
   (function reveal() {
-    var items = all('.reveal');
+    var items = all('.reveal, .reveal-l, .reveal-r, .reveal-s');
     if (!items.length) return;
 
     if (!('IntersectionObserver' in window) ||
@@ -210,6 +210,41 @@
           '! Your enquiry has been opened in WhatsApp — press send and our team will reply shortly. ' +
           'Prefer to talk now? Call 096651 03220.');
       form.reset();
+    });
+  })();
+
+
+  /* ---- 9. Scroll progress bar -------------------------------------------
+     A thin indicator of how far through the page the visitor is. Driven by
+     rAF so scrolling stays smooth on low-end phones.                       */
+  (function scrollProgress() {
+    var bar = doc.querySelector('.scroll-progress');
+    if (!bar || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var ticking = false;
+    var paint = function () {
+      var max = doc.documentElement.scrollHeight - window.innerHeight;
+      var p = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
+      bar.style.transform = 'scaleX(' + p + ')';
+      ticking = false;
+    };
+    on(window, 'scroll', function () {
+      if (!ticking) { ticking = true; requestAnimationFrame(paint); }
+    }, { passive: true });
+    on(window, 'resize', paint, { passive: true });
+    paint();
+  })();
+
+  /* ---- 10. Marquee ------------------------------------------------------
+     The track is duplicated so the -50% keyframe loops seamlessly. Doing it
+     here keeps the markup half the size and impossible to get out of sync.  */
+  (function marquee() {
+    all('.marquee__track').forEach(function (track) {
+      var group = track.querySelector('.marquee__group');
+      if (!group) return;
+      var clone = group.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      track.appendChild(clone);
     });
   })();
 

@@ -31,8 +31,9 @@
   --surface-tint: #EEF3FB;
 
   /* Type */
-  --font-display: 'Outfit', 'Poppins', 'Segoe UI', system-ui, -apple-system, sans-serif;
-  --font-body: 'Inter', 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  /* Single family across the whole site, per brand direction. */
+  --font-display: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-body: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
   /* Space & shape */
   --wrap: 1200px;
@@ -64,7 +65,8 @@ html {
 body {
   font-family: var(--font-body);
   font-size: 1rem;
-  line-height: 1.68;
+  font-weight: 400;
+  line-height: 1.72;
   color: var(--ink-soft);
   background: var(--surface);
   -webkit-font-smoothing: antialiased;
@@ -81,14 +83,14 @@ h1, h2, h3, h4, h5 {
   font-family: var(--font-display);
   color: var(--navy-900);
   line-height: 1.14;
-  letter-spacing: -.02em;
-  font-weight: 700;
+  letter-spacing: -.015em;
+  font-weight: 600;
   text-wrap: balance;
 }
 
-h1 { font-size: clamp(2.3rem, 1.35rem + 3.6vw, 4.1rem); letter-spacing: -.035em; }
-h2 { font-size: clamp(1.85rem, 1.25rem + 2.3vw, 2.95rem); letter-spacing: -.03em; }
-h3 { font-size: clamp(1.22rem, 1.05rem + .7vw, 1.6rem); }
+h1 { font-size: clamp(2.15rem, 1.3rem + 3.4vw, 3.85rem); letter-spacing: -.028em; font-weight: 700; }
+h2 { font-size: clamp(1.75rem, 1.2rem + 2.2vw, 2.75rem); letter-spacing: -.022em; }
+h3 { font-size: clamp(1.16rem, 1.02rem + .62vw, 1.48rem); letter-spacing: -.012em; }
 h4 { font-size: 1.08rem; }
 p  { text-wrap: pretty; }
 
@@ -231,7 +233,13 @@ p  { text-wrap: pretty; }
 .nav { display: flex; align-items: center; justify-content: space-between; gap: 1.25rem; min-height: var(--header-h); }
 
 .brand { display: flex; align-items: center; gap: .8rem; flex: none; }
-.brand__mark { width: 56px; height: 56px; flex: none; filter: drop-shadow(0 3px 8px rgba(6, 21, 57, .18)); }
+/* The logo may be square (emblem) or wide (wordmark) — fix the height and let
+   the width follow, so neither shape is stretched or cropped. */
+.brand__mark {
+  height: 56px; width: auto; max-width: 168px; flex: none;
+  object-fit: contain; object-position: left center;
+  filter: drop-shadow(0 3px 8px rgba(6, 21, 57, .18));
+}
 .brand__text { display: flex; flex-direction: column; line-height: 1.12; }
 .brand__name {
   font-family: var(--font-display); font-weight: 800;
@@ -388,7 +396,7 @@ p  { text-wrap: pretty; }
   display: grid; place-items: center; padding: 9px;
   box-shadow: var(--sh-3);
 }
-.hero__seal img { width: 100%; height: 100%; }
+.hero__seal img { width: 100%; height: 100%; object-fit: contain; border-radius: 50%; }
 
 /* Hero stat strip */
 .hero__stats {
@@ -748,7 +756,7 @@ td .pill { font-weight: 600; }
   padding-bottom: 3rem;
 }
 .footer__brand { display: flex; align-items: center; gap: .85rem; margin-bottom: 1.15rem; }
-.footer__brand img { width: 58px; height: 58px; }
+.footer__brand img { height: 58px; width: auto; max-width: 170px; object-fit: contain; }
 .footer__brand .brand__name { color: #fff; }
 .footer__brand .brand__sub { color: var(--gold-400); }
 .site-footer h4 {
@@ -868,7 +876,7 @@ td .pill { font-weight: 600; }
   .collage .media:nth-child(3) { display: none; }
   .media-stack { grid-template-columns: 1fr; }
   .media-stack .media:first-child { grid-column: auto; }
-  .brand__mark { width: 46px; height: 46px; }
+  .brand__mark { height: 44px; width: auto; max-width: 118px; }
   .brand__name { font-size: 1rem; }
   .brand__sub { font-size: .6rem; letter-spacing: .12em; }
   .hero__seal { display: none; }
@@ -893,3 +901,238 @@ td .pill { font-weight: 600; }
   body { color: #000; }
   .section { padding-block: 1rem; }
 }
+
+/* =========================================================================
+   27. Scroll progress bar
+   ========================================================================= */
+.scroll-progress {
+  position: fixed; inset: 0 0 auto 0; z-index: 120;
+  height: 3px; width: 100%;
+  transform: scaleX(0); transform-origin: 0 50%;
+  background: linear-gradient(90deg, var(--gold-500), var(--red-500) 45%, var(--cyan-500));
+  will-change: transform;
+}
+
+/* =========================================================================
+   28. Government / accreditation badges
+   ========================================================================= */
+.govbar {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
+  gap: 1px; background: var(--line);
+  border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden;
+}
+.govbar__item {
+  background: var(--surface); padding: 1.4rem 1.4rem;
+  display: flex; gap: .9rem; align-items: flex-start;
+}
+.govbar__ico {
+  width: 40px; height: 40px; border-radius: 11px; flex: none;
+  display: grid; place-items: center;
+  background: linear-gradient(140deg, var(--navy-800), var(--navy-600));
+  color: var(--gold-400);
+}
+.govbar__ico svg { width: 20px; height: 20px; }
+.govbar strong {
+  display: block; font-family: var(--font-display); font-weight: 600;
+  font-size: .97rem; color: var(--navy-900); line-height: 1.35;
+}
+.govbar span { display: block; font-size: .84rem; color: var(--ink-mute); margin-top: .18rem; }
+
+.section--dark .govbar { background: rgba(255,255,255,.14); border-color: rgba(255,255,255,.14); }
+.section--dark .govbar__item { background: rgba(6, 21, 57, .5); }
+.section--dark .govbar strong { color: #fff; }
+.section--dark .govbar span { color: rgba(255,255,255,.6); }
+
+/* =========================================================================
+   29. Sports marquee — the full discipline list, always in motion
+   ========================================================================= */
+.marquee {
+  position: relative; overflow: hidden;
+  padding-block: 1.15rem;
+  border-block: 1px solid rgba(255, 255, 255, .14);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.marquee__track {
+  display: flex; width: max-content;
+  animation: marquee 46s linear infinite;
+}
+.marquee:hover .marquee__track { animation-play-state: paused; }
+.marquee__group { display: flex; align-items: center; flex: none; }
+.marquee__item {
+  display: inline-flex; align-items: center; gap: .85rem;
+  padding-inline: 1.35rem;
+  font-family: var(--font-display); font-weight: 500; font-size: .97rem;
+  color: rgba(255, 255, 255, .78); white-space: nowrap;
+}
+.marquee__item::after {
+  content: ""; width: 5px; height: 5px; border-radius: 50%;
+  background: var(--gold-500); opacity: .85;
+}
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+/* =========================================================================
+   30. Service cards (construction, affiliation, certification…)
+   ========================================================================= */
+.svc {
+  position: relative; overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--line); border-radius: var(--r-lg);
+  padding: clamp(1.6rem, 2.8vw, 2.15rem);
+  display: flex; flex-direction: column; gap: .85rem;
+  transition: transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s var(--ease);
+}
+.svc::before {
+  content: ""; position: absolute; inset: 0 0 auto 0; height: 4px;
+  background: linear-gradient(90deg, var(--gold-500), var(--red-500));
+  transform: scaleX(0); transform-origin: 0 50%;
+  transition: transform .45s var(--ease);
+}
+.svc:hover { transform: translateY(-6px); box-shadow: var(--sh-3); border-color: transparent; }
+.svc:hover::before { transform: scaleX(1); }
+.svc__num {
+  font-family: var(--font-display); font-weight: 700; font-size: .82rem;
+  letter-spacing: .16em; color: var(--gold-600);
+}
+.svc h3 { margin-top: -.2rem; }
+.svc p { font-size: .97rem; }
+.svc .ticks { margin-top: .3rem; }
+.svc .ticks li { font-size: .93rem; }
+.svc .textlink { margin-top: auto; padding-top: .7rem; }
+
+/* =========================================================================
+   31. Process rail — how we work
+   ========================================================================= */
+.rail { position: relative; display: grid; gap: 0; counter-reset: rail; }
+.rail::before {
+  content: ""; position: absolute; left: 23px; top: 12px; bottom: 12px; width: 2px;
+  background: linear-gradient(180deg, var(--gold-500), rgba(255,255,255,.15));
+  opacity: .5;
+}
+.rail li {
+  counter-increment: rail;
+  position: relative; padding: 0 0 1.9rem 4.1rem;
+}
+.rail li:last-child { padding-bottom: 0; }
+.rail li::before {
+  content: counter(rail);
+  position: absolute; left: 0; top: -2px;
+  width: 48px; height: 48px; border-radius: 50%;
+  display: grid; place-items: center;
+  font-family: var(--font-display); font-weight: 700; font-size: 1rem;
+  background: linear-gradient(140deg, var(--gold-500), var(--gold-400));
+  color: var(--navy-900);
+  box-shadow: 0 0 0 6px rgba(6, 21, 57, .55);
+}
+.rail h4 { margin-bottom: .25rem; }
+.rail p { font-size: .95rem; }
+.section--dark .rail p { color: rgba(255, 255, 255, .72); }
+
+/* =========================================================================
+   32. Leadership / founder
+   ========================================================================= */
+.leader { display: grid; grid-template-columns: minmax(0, 320px) 1fr; gap: clamp(1.75rem, 4vw, 3.25rem); align-items: center; }
+.leader__photo { position: relative; }
+.leader__photo .media { position: relative; z-index: 1; aspect-ratio: 4 / 5; box-shadow: var(--sh-3); }
+.leader__photo::after {
+  content: ""; position: absolute; inset: auto -14px -14px auto;
+  width: 62%; height: 62%; z-index: 0; border-radius: var(--r-lg);
+  background: linear-gradient(135deg, var(--gold-500), transparent 70%);
+  opacity: .55;
+}
+.leader__role {
+  display: inline-flex; align-items: center; gap: .5rem;
+  font-family: var(--font-display); font-weight: 600; font-size: .82rem;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--gold-600); margin-bottom: .55rem;
+}
+.leader blockquote {
+  margin-top: 1.3rem; padding-left: 1.25rem;
+  border-left: 3px solid var(--gold-500);
+  font-size: 1.03rem; font-style: italic; color: var(--ink-soft);
+}
+.section--dark .leader blockquote { color: rgba(255,255,255,.8); }
+.leader__meta { display: flex; flex-wrap: wrap; gap: .55rem; margin-top: 1.5rem; }
+
+.tagpill {
+  display: inline-flex; align-items: center; gap: .4rem;
+  padding: .42rem .95rem; border-radius: 999px;
+  background: var(--surface-tint); color: var(--navy-700);
+  font-size: .85rem; font-weight: 500;
+}
+.section--dark .tagpill { background: rgba(255,255,255,.1); color: rgba(255,255,255,.85); }
+
+/* =========================================================================
+   33. Photo slots awaiting the academy's own images
+   ========================================================================= */
+.media--slot .media__fallback { display: grid; }
+.media__note {
+  position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%);
+  z-index: 2; padding: .3rem .8rem; border-radius: 999px;
+  background: rgba(6, 21, 57, .55); color: rgba(255, 255, 255, .82);
+  font-size: .7rem; font-weight: 500; letter-spacing: .07em; text-transform: uppercase;
+  white-space: nowrap; pointer-events: none;
+}
+.media > img:not([hidden]) ~ .media__note { display: none; }
+.media.is-fallback .media__note, .media--slot .media__note { display: block; }
+
+/* =========================================================================
+   34. Richer scroll reveals
+   ========================================================================= */
+.reveal-l { opacity: 0; transform: translateX(-26px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+.reveal-r { opacity: 0; transform: translateX(26px);  transition: opacity .7s var(--ease), transform .7s var(--ease); }
+.reveal-s { opacity: 0; transform: scale(.955);       transition: opacity .7s var(--ease), transform .7s var(--ease); }
+.reveal-l.is-in, .reveal-r.is-in, .reveal-s.is-in { opacity: 1; transform: none; }
+
+/* Hero entrance */
+@keyframes riseIn { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+.hero__in > * { animation: riseIn .85s var(--ease) both; }
+.hero__in > *:nth-child(1) { animation-delay: .05s; }
+.hero__in > *:nth-child(2) { animation-delay: .16s; }
+.hero__in > *:nth-child(3) { animation-delay: .27s; }
+.hero__in > *:nth-child(4) { animation-delay: .38s; }
+.hero__in > *:nth-child(5) { animation-delay: .49s; }
+
+/* Hero background photo */
+.hero--photo { padding-block: clamp(4.5rem, 9vw, 8rem); }
+.hero__bg { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+.hero__bg img { width: 100%; height: 100%; object-fit: cover; opacity: .3; }
+.hero__bg::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(105deg, rgba(6,21,57,.94) 12%, rgba(6,21,57,.72) 55%, rgba(10,33,104,.55));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-l, .reveal-r, .reveal-s { opacity: 1; transform: none; }
+  .hero__in > * { animation: none; }
+  .marquee__track { animation: none; }
+  .scroll-progress { display: none; }
+}
+
+@media (max-width: 900px) {
+  .leader { grid-template-columns: 1fr; }
+  .leader__photo { max-width: 300px; }
+}
+
+/* ---------- 35. Misc additions ------------------------------------------ */
+.hero__note {
+  margin-top: 1.6rem; display: flex; align-items: flex-start; gap: .6rem;
+  flex-wrap: wrap; max-width: 46ch;
+  font-size: .9rem; color: rgba(255, 255, 255, .68);
+}
+.hero__note svg { width: 17px; height: 17px; flex: none; margin-top: .28rem; color: var(--gold-400); }
+.hero__note em { color: var(--gold-400); font-style: italic; }
+
+/* Seven nav items need a little more room before the mobile breakpoint. */
+@media (max-width: 1180px) and (min-width: 901px) {
+  .nav__link { padding: .6rem .62rem; font-size: .91rem; }
+  .brand__name { font-size: 1.04rem; }
+  .brand__mark { height: 48px; }
+  .topbar__tag { display: none; }
+}
+
+/* Rail on a light background — the ring must match the surface behind it. */
+.rail--light::before { background: linear-gradient(180deg, var(--gold-500), rgba(10,33,104,.18)); opacity: .6; }
+.rail--light li::before { box-shadow: 0 0 0 6px var(--surface-tint); }
+.rail--light h4 { color: var(--navy-900); }
+.rail--light p { color: var(--ink-soft); }
