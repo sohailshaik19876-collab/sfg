@@ -1,0 +1,169 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600" role="img" aria-label="Skill For Glory Sporting Academy emblem">
+  <title>Skill For Glory Sporting Academy</title>
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFE9A0"/>
+      <stop offset="35%" stop-color="#F7C948"/>
+      <stop offset="70%" stop-color="#E0A21A"/>
+      <stop offset="100%" stop-color="#B87A0B"/>
+    </linearGradient>
+    <linearGradient id="goldRay" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFD75E"/>
+      <stop offset="100%" stop-color="#D99A12"/>
+    </linearGradient>
+    <linearGradient id="navy" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1B3F9E"/>
+      <stop offset="100%" stop-color="#0A2168"/>
+    </linearGradient>
+    <linearGradient id="leafGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#3FB159"/>
+      <stop offset="100%" stop-color="#12742F"/>
+    </linearGradient>
+    <radialGradient id="starGrad" cx="35%" cy="30%" r="80%">
+      <stop offset="0%" stop-color="#FFF0B8"/>
+      <stop offset="55%" stop-color="#F3B41C"/>
+      <stop offset="100%" stop-color="#B9780A"/>
+    </radialGradient>
+
+    <path id="arcTop" d="M 113.4 387.1 A 206 206 0 1 1 486.6 387.1" fill="none"/>
+    <path id="arcBottom" d="M 107.7 411.0 A 222 222 0 0 0 492.3 411.0" fill="none"/>
+
+    <polygon id="ray" points="300,6 318,62 282,62" fill="url(#goldRay)"/>
+
+    <g id="star">
+      <polygon points="0,-10 2.9,-3.3 10,-3 4.3,1.5 6.2,8.6 0,4.5 -6.2,8.6 -4.3,1.5 -10,-3 -2.9,-3.3"
+               fill="url(#starGrad)" stroke="#8A5A05" stroke-width="0.7" stroke-linejoin="round"/>
+    </g>
+
+    <g id="leaf">
+      <ellipse cx="300" cy="114" rx="9.5" ry="21" fill="url(#leafGrad)"/>
+      <path d="M300 94 Q302 114 300 135" stroke="#0C5522" stroke-width="1.4" fill="none" opacity=".55"/>
+    </g>
+  </defs>
+
+  <!-- ── Outer gold sunburst ─────────────────────────────────────── -->
+  <g>
+    <use href="#ray" transform="rotate(0 300 300)"/>
+    <use href="#ray" transform="rotate(11.25 300 300)"/>
+    <use href="#ray" transform="rotate(22.5 300 300)"/>
+    <use href="#ray" transform="rotate(33.75 300 300)"/>
+    <use href="#ray" transform="rotate(45 300 300)"/>
+    <use href="#ray" transform="rotate(56.25 300 300)"/>
+    <use href="#ray" transform="rotate(67.5 300 300)"/>
+    <use href="#ray" transform="rotate(78.75 300 300)"/>
+    <use href="#ray" transform="rotate(90 300 300)"/>
+    <use href="#ray" transform="rotate(101.25 300 300)"/>
+    <use href="#ray" transform="rotate(112.5 300 300)"/>
+    <use href="#ray" transform="rotate(123.75 300 300)"/>
+    <use href="#ray" transform="rotate(135 300 300)"/>
+    <use href="#ray" transform="rotate(146.25 300 300)"/>
+    <use href="#ray" transform="rotate(157.5 300 300)"/>
+    <use href="#ray" transform="rotate(168.75 300 300)"/>
+    <use href="#ray" transform="rotate(180 300 300)"/>
+    <use href="#ray" transform="rotate(191.25 300 300)"/>
+    <use href="#ray" transform="rotate(202.5 300 300)"/>
+    <use href="#ray" transform="rotate(213.75 300 300)"/>
+    <use href="#ray" transform="rotate(225 300 300)"/>
+    <use href="#ray" transform="rotate(236.25 300 300)"/>
+    <use href="#ray" transform="rotate(247.5 300 300)"/>
+    <use href="#ray" transform="rotate(258.75 300 300)"/>
+    <use href="#ray" transform="rotate(270 300 300)"/>
+    <use href="#ray" transform="rotate(281.25 300 300)"/>
+    <use href="#ray" transform="rotate(292.5 300 300)"/>
+    <use href="#ray" transform="rotate(303.75 300 300)"/>
+    <use href="#ray" transform="rotate(315 300 300)"/>
+    <use href="#ray" transform="rotate(326.25 300 300)"/>
+    <use href="#ray" transform="rotate(337.5 300 300)"/>
+    <use href="#ray" transform="rotate(348.75 300 300)"/>
+  </g>
+
+  <!-- Gold body ring -->
+  <circle cx="300" cy="300" r="272" fill="url(#gold)"/>
+  <circle cx="300" cy="300" r="272" fill="none" stroke="#A96E08" stroke-width="2" opacity=".5"/>
+  <circle cx="300" cy="300" r="256" fill="none" stroke="#8A5A05" stroke-width="2.5" opacity=".45"/>
+
+  <!-- ── Navy legend band ────────────────────────────────────────── -->
+  <circle cx="300" cy="300" r="252" fill="url(#navy)"/>
+  <circle cx="300" cy="300" r="252" fill="none" stroke="#F3C64B" stroke-width="3"/>
+  <circle cx="300" cy="300" r="198" fill="none" stroke="#F3C64B" stroke-width="3"/>
+
+  <g fill="#FBD25F" font-family="Georgia, 'Times New Roman', serif" font-weight="700">
+    <text font-size="31" letter-spacing="1.2">
+      <textPath href="#arcTop" startOffset="50%" text-anchor="middle">Skill for Glory Sporting Academy</textPath>
+    </text>
+    <text font-size="20" letter-spacing="1.1" font-style="italic">
+      <textPath href="#arcBottom" startOffset="50%" text-anchor="middle">Sports Education Essential Skills for Life</textPath>
+    </text>
+  </g>
+
+  <!-- ── Inner field ─────────────────────────────────────────────── -->
+  <circle cx="300" cy="300" r="196" fill="#FFFFFF"/>
+
+  <!-- ── Laurel wreath ───────────────────────────────────────────── -->
+  <g>
+    <path d="M 236.4 474.8 A 186 186 0 0 1 168.5 168.5" fill="none" stroke="#0F6B2C" stroke-width="5" stroke-linecap="round"/>
+    <path d="M 363.6 474.8 A 186 186 0 0 0 431.5 168.5" fill="none" stroke="#0F6B2C" stroke-width="5" stroke-linecap="round"/>
+
+    <g>
+      <use href="#leaf" transform="rotate(200 300 300)"/>
+      <use href="#leaf" transform="rotate(214 300 300)"/>
+      <use href="#leaf" transform="rotate(228 300 300)"/>
+      <use href="#leaf" transform="rotate(242 300 300)"/>
+      <use href="#leaf" transform="rotate(256 300 300)"/>
+      <use href="#leaf" transform="rotate(270 300 300)"/>
+      <use href="#leaf" transform="rotate(284 300 300)"/>
+      <use href="#leaf" transform="rotate(298 300 300)"/>
+      <use href="#leaf" transform="rotate(313 300 300)"/>
+    </g>
+    <g>
+      <use href="#leaf" transform="rotate(160 300 300)"/>
+      <use href="#leaf" transform="rotate(146 300 300)"/>
+      <use href="#leaf" transform="rotate(132 300 300)"/>
+      <use href="#leaf" transform="rotate(118 300 300)"/>
+      <use href="#leaf" transform="rotate(104 300 300)"/>
+      <use href="#leaf" transform="rotate(90 300 300)"/>
+      <use href="#leaf" transform="rotate(76 300 300)"/>
+      <use href="#leaf" transform="rotate(62 300 300)"/>
+      <use href="#leaf" transform="rotate(47 300 300)"/>
+    </g>
+  </g>
+
+  <!-- ── Rising stars ────────────────────────────────────────────── -->
+  <g>
+    <use href="#star" transform="translate(220 190) scale(0.9)"/>
+    <use href="#star" transform="translate(251 171) scale(1.1)"/>
+    <use href="#star" transform="translate(287 159) scale(1.32)"/>
+    <use href="#star" transform="translate(326 156) scale(1.58)"/>
+    <use href="#star" transform="translate(368 165) scale(1.85)"/>
+  </g>
+
+  <!-- ── Athlete figure ──────────────────────────────────────────── -->
+  <g stroke="#123B8F" stroke-width="14" stroke-linecap="round" fill="none">
+    <path d="M230 232 L230 274"/>
+    <path d="M230 240 L204 210"/>
+    <path d="M230 240 L258 207"/>
+    <path d="M230 274 L212 318"/>
+    <path d="M230 274 L252 316"/>
+  </g>
+  <circle cx="230" cy="210" r="15" fill="#123B8F"/>
+
+  <!-- ── Wordmark ────────────────────────────────────────────────── -->
+  <g font-family="'Arial Black', 'Helvetica Neue', Arial, sans-serif" font-weight="900">
+    <text x="268" y="228" font-size="50" fill="#E23127" letter-spacing="1">SKILL</text>
+
+    <text x="268" y="278" font-size="50" fill="#123B8F">F</text>
+    <g>
+      <circle cx="316" cy="261" r="23" fill="none" stroke="#123B8F" stroke-width="8"/>
+      <ellipse cx="316" cy="261" rx="10" ry="23" fill="none" stroke="#123B8F" stroke-width="4"/>
+      <path d="M295 253 H337 M295 269 H337" stroke="#123B8F" stroke-width="4"/>
+    </g>
+    <text x="345" y="278" font-size="50" fill="#123B8F">R</text>
+
+    <text x="266" y="326" font-size="50" fill="#1E9C3E" letter-spacing="1">GLORY</text>
+  </g>
+
+  <text x="270" y="349" font-family="Arial, Helvetica, sans-serif" font-weight="700"
+        font-size="15" letter-spacing="3.2" fill="#151515">SPORTING ACADEMY</text>
+  <text x="270" y="372" font-family="'Noto Sans Devanagari', 'Nirmala UI', 'Mangal', sans-serif"
+        font-size="15" fill="#0A2168">प्रतिभा एवं कौशल खेल संस्थान</text>
+</svg>

@@ -1,0 +1,218 @@
+/* =========================================================================
+   Skill For Glory Sporting Academy — site behaviour
+   Vanilla JS, no dependencies. Safe to load with `defer`.
+   ========================================================================= */
+(function () {
+  'use strict';
+
+  var doc = document;
+  var on = function (el, ev, fn, opts) { if (el) el.addEventListener(ev, fn, opts); };
+  var all = function (sel, root) { return Array.prototype.slice.call((root || doc).querySelectorAll(sel)); };
+
+  /* ---- 1. Mobile navigation -------------------------------------------- */
+  (function nav() {
+    var toggle = doc.querySelector('.nav__toggle');
+    var menu = doc.getElementById('nav-menu');
+    if (!toggle || !menu) return;
+
+    var setOpen = function (open) {
+      toggle.setAttribute('aria-expanded', String(open));
+      menu.classList.toggle('is-open', open);
+      doc.body.style.overflow = open && window.matchMedia('(max-width: 900px)').matches ? 'hidden' : '';
+    };
+
+    on(toggle, 'click', function () {
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+    });
+
+    // Close when a link is tapped, or on Escape, or when resizing to desktop.
+    all('a', menu).forEach(function (a) { on(a, 'click', function () { setOpen(false); }); });
+    on(doc, 'keydown', function (e) { if (e.key === 'Escape') setOpen(false); });
+    on(window, 'resize', function () {
+      if (!window.matchMedia('(max-width: 900px)').matches) setOpen(false);
+    });
+  })();
+
+  /* ---- 2. Sticky-header shadow ----------------------------------------- */
+  (function stickyHeader() {
+    var header = doc.querySelector('.site-header');
+    if (!header) return;
+    var update = function () { header.classList.toggle('is-stuck', window.scrollY > 8); };
+    update();
+    on(window, 'scroll', update, { passive: true });
+  })();
+
+  /* ---- 3. Photo fallback ------------------------------------------------
+     Every photo sits inside a .media wrapper that already carries a branded
+     gradient. If the remote image cannot load (offline, blocked host, or a
+     photo that has been swapped out), we drop the <img> and reveal the
+     gradient plus a sport icon instead of showing a broken-image glyph.     */
+  (function mediaFallback() {
+    var fail = function (img) {
+      var box = img.closest('.media');
+      if (box) box.classList.add('is-fallback');
+      img.remove();
+    };
+
+    all('.media > img').forEach(function (img) {
+      on(img, 'error', function () { fail(img); });
+      // Cached images may have already failed before this script ran.
+      if (img.complete && img.naturalWidth === 0) fail(img);
+    });
+  })();
+
+  /* ---- 4. Scroll reveal -------------------------------------------------- */
+  (function reveal() {
+    var items = all('.reveal');
+    if (!items.length) return;
+
+    if (!('IntersectionObserver' in window) ||
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      items.forEach(function (el) { el.classList.add('is-in'); });
+      return;
+    }
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        var delay = parseInt(el.getAttribute('data-delay') || '0', 10);
+        setTimeout(function () { el.classList.add('is-in'); }, delay);
+        io.unobserve(el);
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+
+    items.forEach(function (el) { io.observe(el); });
+  })();
+
+  /* ---- 5. Animated counters --------------------------------------------- */
+  (function counters() {
+    var nums = all('[data-count]');
+    if (!nums.length || !('IntersectionObserver' in window)) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var run = function (el) {
+      var target = parseFloat(el.getAttribute('data-count'));
+      var suffix = el.getAttribute('data-suffix') || '';
+      var start = performance.now();
+      var dur = 1300;
+
+      var tick = function (now) {
+        var p = Math.min((now - start) / dur, 1);
+        var eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(target * eased).toLocaleString('en-IN') + suffix;
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        run(entry.target);
+        io.unobserve(entry.target);
+      });
+    }, { threshold: 0.5 });
+
+    nums.forEach(function (el) { io.observe(el); });
+  })();
+
+  /* ---- 6. Gallery lightbox ---------------------------------------------- */
+  (function lightbox() {
+    var triggers = all('[data-lightbox] img');
+    if (!triggers.length) return;
+
+    var box = doc.createElement('div');
+    box.className = 'lightbox';
+    box.setAttribute('role', 'dialog');
+    box.setAttribute('aria-modal', 'true');
+    box.setAttribute('aria-label', 'Photo viewer');
+    box.innerHTML =
+      '<button class="lightbox__close" type="button" aria-label="Close photo viewer">&times;</button><img alt="">';
+    doc.body.appendChild(box);
+
+    var big = box.querySelector('img');
+    var last = null;
+
+    var close = function () {
+      box.classList.remove('is-open');
+      doc.body.style.overflow = '';
+      if (last) last.focus();
+    };
+
+    triggers.forEach(function (img) {
+      var holder = img.closest('[data-lightbox]');
+      holder.setAttribute('tabindex', '0');
+      holder.setAttribute('role', 'button');
+
+      var open = function () {
+        big.src = img.currentSrc || img.src;
+        big.alt = img.alt || '';
+        last = holder;
+        box.classList.add('is-open');
+        doc.body.style.overflow = 'hidden';
+        box.querySelector('.lightbox__close').focus();
+      };
+
+      on(holder, 'click', open);
+      on(holder, 'keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); }
+      });
+    });
+
+    on(box, 'click', function (e) { if (e.target === box || e.target.matches('.lightbox__close')) close(); });
+    on(doc, 'keydown', function (e) { if (e.key === 'Escape' && box.classList.contains('is-open')) close(); });
+  })();
+
+  /* ---- 7. Enquiry form --------------------------------------------------
+     The site is static, so there is no server to post to. Until a form
+     endpoint is configured (see README), we hand the enquiry to WhatsApp so
+     it still reaches the academy. Set data-endpoint on the <form> to POST
+     to a service such as Formspree instead.                                */
+  (function enquiryForm() {
+    var form = doc.getElementById('enquiry-form');
+    if (!form) return;
+
+    var status = doc.getElementById('form-status');
+    var say = function (msg) {
+      if (!status) return;
+      status.textContent = msg;
+      status.classList.add('is-visible');
+    };
+
+    on(form, 'submit', function (e) {
+      var endpoint = form.getAttribute('data-endpoint');
+      if (endpoint) return; // Let the browser post normally.
+
+      e.preventDefault();
+      if (!form.reportValidity()) return;
+
+      var data = new FormData(form);
+      var val = function (k) { return (data.get(k) || '').toString().trim(); };
+
+      var lines = [
+        'New enquiry — Skill For Glory Sporting Academy',
+        '',
+        'Name: ' + val('name'),
+        'Phone: ' + val('phone'),
+        'Email: ' + (val('email') || '—'),
+        'Interested in: ' + val('interest'),
+        'Age group: ' + (val('age') || '—'),
+        '',
+        'Message:',
+        val('message') || '—'
+      ];
+
+      var wa = form.getAttribute('data-whatsapp') || '919665103220';
+      window.open('https://wa.me/' + wa + '?text=' + encodeURIComponent(lines.join('\n')), '_blank', 'noopener');
+
+      say('Thanks, ' + (val('name').split(' ')[0] || 'there') +
+          '! Your enquiry has been opened in WhatsApp — press send and our team will reply shortly. ' +
+          'Prefer to talk now? Call 096651 03220.');
+      form.reset();
+    });
+  })();
+
+  /* ---- 8. Footer year ---------------------------------------------------- */
+  all('[data-year]').forEach(function (el) { el.textContent = new Date().getFullYear(); });
+})();
