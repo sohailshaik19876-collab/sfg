@@ -1101,10 +1101,31 @@ td .pill { font-weight: 600; }
 /* Hero background photo */
 .hero--photo { padding-block: clamp(4.5rem, 9vw, 8rem); }
 .hero__bg { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
-.hero__bg img { width: 100%; height: 100%; object-fit: cover; opacity: .3; }
+/* The photo carries full opacity; the scrim alone controls contrast. At .3
+   opacity under a 94% scrim only about 2% of the picture came through, which
+   made a hero photo swap invisible. */
+.hero__bg img { width: 100%; height: 100%; object-fit: cover; opacity: 1; }
 .hero__bg::after {
   content: ""; position: absolute; inset: 0;
-  background: linear-gradient(105deg, rgba(6,21,57,.94) 12%, rgba(6,21,57,.72) 55%, rgba(10,33,104,.55));
+  /* Dense behind the headline on the left, opening up over the photo right. */
+  background:
+    linear-gradient(100deg,
+      rgba(6, 21, 57, .93) 0%,
+      rgba(6, 21, 57, .84) 32%,
+      rgba(6, 21, 57, .55) 64%,
+      rgba(8, 28, 80, .34) 100%);
+}
+
+/* One column on phones means the copy sits over the whole width, so the scrim
+   has to run vertically instead. */
+@media (max-width: 900px) {
+  .hero__bg::after {
+    background:
+      linear-gradient(180deg,
+        rgba(6, 21, 57, .90) 0%,
+        rgba(6, 21, 57, .86) 45%,
+        rgba(8, 28, 80, .80) 100%);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

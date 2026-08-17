@@ -145,11 +145,10 @@ grep -rl 'Untitled-design-1-scaled' . --include='*.html' \
   | xargs sed -i 's|https://plinium.co.uk/wp-content/uploads/2026/08/Untitled-design-1-scaled.png|assets/img/logo-footer.png|g'
 ```
 
-### Header and footer wordmarks differ
+### Wordmark
 
-The footer reads **SFG Sporting Academy**, as requested. The header still reads **SFG
-Sports Academy**. If the header should match, change `SHORT` at the top of the page source
-— it is used in the header, the page titles and the structured data.
+The short name is **SFG Sporting Academy** everywhere — header, footer, page titles and
+structured data — matching the full name, *Skill For Glory Sporting Academy*.
 
 ---
 
@@ -181,6 +180,14 @@ These are **my defaults, not your data** — please correct anything that is wro
 9. **Pool and range claims** — the site now states an *Olympic size pool* and a *10 metre
    shooting range*, on your instruction. Both appear as facility labels and in the spec
    tables on `facilities.html`.
+
+### Hero image contrast
+
+The hero photo sits at full opacity under a gradient scrim that does all the contrast
+work. If you swap in a much brighter photo, re-check the headline: measured against a
+pure-white stand-in the white text still holds 6.2:1 on desktop and 12.2:1 on mobile,
+against the 4.5:1 WCAG AA threshold. Darkening the first two stops of
+`.hero__bg::after` is the lever if a future photo needs it.
 
 ## The enquiry form
 
