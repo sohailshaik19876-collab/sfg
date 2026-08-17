@@ -118,8 +118,12 @@ of the page source (or move them to the swimming section) — it is a two-line c
 
 ## The logo
 
-Header, footer and social-share images use the logo you supplied:
-`https://plinium.co.uk/wp-content/uploads/2026/08/Untitled-design-scaled.png`
+Two logo files are in use, both supplied by you:
+
+| Slot | File |
+|---|---|
+| Header + social share | `.../Untitled-design-scaled.png` |
+| Footer | `.../Untitled-design-1-scaled.png` |
 
 It is rendered larger than before — 68px tall in the header on wide screens, 70px in the
 footer — and the slots are aspect-ratio agnostic (fixed height, width follows), so a
@@ -133,9 +137,19 @@ empty. The browser-tab icon uses the SVG, because it stays crisp at 16px.
 CDN means your site breaks if they move the file. Save it to `assets/img/logo.png`, then:
 
 ```bash
+# header logo
 grep -rl 'Untitled-design-scaled' . --include='*.html' \
   | xargs sed -i 's|https://plinium.co.uk/wp-content/uploads/2026/08/Untitled-design-scaled.png|assets/img/logo.png|g'
+# footer logo
+grep -rl 'Untitled-design-1-scaled' . --include='*.html' \
+  | xargs sed -i 's|https://plinium.co.uk/wp-content/uploads/2026/08/Untitled-design-1-scaled.png|assets/img/logo-footer.png|g'
 ```
+
+### Header and footer wordmarks differ
+
+The footer reads **SFG Sporting Academy**, as requested. The header still reads **SFG
+Sports Academy**. If the header should match, change `SHORT` at the top of the page source
+— it is used in the header, the page titles and the structured data.
 
 ---
 
@@ -164,6 +178,9 @@ These are **my defaults, not your data** — please correct anything that is wro
 7. **Social links** — footer points at `/Skillforglory` on Facebook and Instagram.
    Correct the handles if either differs.
 8. **Age ranges** in `programs.html` — check they match who you actually take.
+9. **Pool and range claims** — the site now states an *Olympic size pool* and a *10 metre
+   shooting range*, on your instruction. Both appear as facility labels and in the spec
+   tables on `facilities.html`.
 
 ## The enquiry form
 
