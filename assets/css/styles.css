@@ -836,7 +836,8 @@ td .pill { font-weight: 600; }
   .hero__seal { left: auto; right: -14px; bottom: -22px; width: 104px; height: 104px; }
 }
 
-@media (max-width: 900px) {
+/* Eight nav items need the drawer sooner than the layout needs to stack. */
+@media (max-width: 1080px) {
   :root { --header-h: 72px; }
 
   .nav__toggle { display: grid; }
@@ -857,6 +858,9 @@ td .pill { font-weight: 600; }
   .nav__link.is-active::after { left: .25rem; bottom: .55rem; transform: none; }
   .nav__menu .btn { margin-top: 1.15rem; }
 
+}
+
+@media (max-width: 900px) {
   .grid--3, .grid--2 { grid-template-columns: 1fr; }
   .split, .contact-grid { grid-template-columns: 1fr; }
   .split--flip .split__media { order: 0; }
@@ -936,12 +940,12 @@ td .pill { font-weight: 600; }
   display: block; font-family: var(--font-display); font-weight: 600;
   font-size: .97rem; color: var(--navy-900); line-height: 1.35;
 }
-.govbar span { display: block; font-size: .84rem; color: var(--ink-mute); margin-top: .18rem; }
+.govbar__item div span { display: block; font-size: .84rem; color: var(--ink-mute); margin-top: .18rem; }
 
 .section--dark .govbar { background: rgba(255,255,255,.14); border-color: rgba(255,255,255,.14); }
 .section--dark .govbar__item { background: rgba(6, 21, 57, .5); }
 .section--dark .govbar strong { color: #fff; }
-.section--dark .govbar span { color: rgba(255,255,255,.6); }
+.section--dark .govbar__item div span { color: rgba(255,255,255,.6); }
 
 /* =========================================================================
    29. Sports marquee — the full discipline list, always in motion
@@ -1124,7 +1128,7 @@ td .pill { font-weight: 600; }
 .hero__note em { color: var(--gold-400); font-style: italic; }
 
 /* Seven nav items need a little more room before the mobile breakpoint. */
-@media (max-width: 1180px) and (min-width: 901px) {
+@media (max-width: 1180px) and (min-width: 1081px) {
   .nav__link { padding: .6rem .62rem; font-size: .91rem; }
   .brand__name { font-size: 1.04rem; }
   .brand__mark { height: 48px; }
@@ -1160,7 +1164,7 @@ td .pill { font-weight: 600; }
 .tagpill svg      { width: 16px; height: 16px; flex: none; }
 .leader__role svg { width: 15px; height: 15px; flex: none; }
 .marquee__item svg{ width: 19px; height: 19px; flex: none; color: var(--gold-400); }
-.govbar__ico svg  { width: 21px; height: 21px; }
+.govbar__ico svg  { width: 22px; height: 22px; stroke-width: 2; }
 .svc > svg, .icard > svg { width: 24px; height: 24px; }
 
 /* A little more presence for the accreditation row */
@@ -1173,4 +1177,79 @@ td .pill { font-weight: 600; }
 
 @media (prefers-reduced-motion: reduce) {
   .typer__caret { animation: none; opacity: 1; }
+}
+
+/* =========================================================================
+   38. Larger logo lockup
+   ========================================================================= */
+:root { --header-h: 94px; }
+.brand { gap: .95rem; }
+.brand__mark { height: 68px; max-width: 250px; }
+.brand__name { font-size: 1.2rem; }
+.footer__brand img { height: 70px; max-width: 250px; }
+.hero__seal { width: 136px; height: 136px; }
+
+/* =========================================================================
+   39. Phone numbers — never break a number across two lines
+   ========================================================================= */
+.numlist { display: grid; gap: .18rem; }
+.numlist a, .numlist li { white-space: nowrap; }
+.numlist a { font-variant-numeric: tabular-nums; }
+.numlist--footer { display: grid; gap: .2rem; }
+.infolist .numlist a { font-size: 1.01rem; color: var(--ink); }
+.infolist .numlist a:hover { color: var(--navy-600); }
+
+/* =========================================================================
+   40. Eight nav items — tighten before the mobile breakpoint
+   ========================================================================= */
+@media (max-width: 1290px) and (min-width: 1081px) {
+  .nav__link { padding: .6rem .58rem; font-size: .9rem; }
+  .brand__mark { height: 56px; max-width: 190px; }
+  .brand__name { font-size: 1.02rem; }
+  .brand__sub { font-size: .58rem; }
+  .topbar__tag { display: none; }
+}
+
+@media (max-width: 1080px) {
+  :root { --header-h: 80px; }
+  .brand__mark { height: 56px; max-width: 190px; }
+}
+@media (max-width: 620px) {
+  .brand__mark { height: 48px; max-width: 140px; }
+}
+
+/* =========================================================================
+   41. Nav: the menu carries its own "Book a Trial" for the mobile drawer.
+   On desktop the .nav__cta button is the visible one, so hide the duplicate
+   rather than paying for it in horizontal space.
+   ========================================================================= */
+@media (min-width: 1081px) {
+  .nav__menu > li:last-child { display: none; }
+}
+
+/* =========================================================================
+   42. Sideways reveals slide in from off-canvas, which overflows a narrow
+   viewport before they animate. Move vertically on small screens instead.
+   ========================================================================= */
+@media (max-width: 900px) {
+  .reveal-l, .reveal-r { transform: translateY(22px); }
+}
+
+/* =========================================================================
+   43. Nav sizing for eight items
+   The 1200px content column is right for prose but too tight for a brand
+   lockup + eight links + a CTA. Give the header its own wider container
+   and trim the link padding; the page body keeps its 1200px measure.
+   ========================================================================= */
+@media (min-width: 1081px) {
+  .site-header .nav { max-width: 1320px; margin-inline: auto; }
+  .site-header > .wrap { width: 100%; max-width: none; }
+  .nav__link { padding: .6rem .72rem; }
+  .nav__menu { gap: .15rem; }
+}
+
+/* Between the drawer breakpoint and ~1180px the wordmark is what does not fit;
+   drop it and let the emblem carry the brand. */
+@media (max-width: 1180px) and (min-width: 1081px) {
+  .brand__text { display: none; }
 }

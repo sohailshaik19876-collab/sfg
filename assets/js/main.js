@@ -18,7 +18,7 @@
     var setOpen = function (open) {
       toggle.setAttribute('aria-expanded', String(open));
       menu.classList.toggle('is-open', open);
-      doc.body.style.overflow = open && window.matchMedia('(max-width: 900px)').matches ? 'hidden' : '';
+      doc.body.style.overflow = open && window.matchMedia('(max-width: 1080px)').matches ? 'hidden' : '';
     };
 
     on(toggle, 'click', function () {
@@ -29,7 +29,7 @@
     all('a', menu).forEach(function (a) { on(a, 'click', function () { setOpen(false); }); });
     on(doc, 'keydown', function (e) { if (e.key === 'Escape') setOpen(false); });
     on(window, 'resize', function () {
-      if (!window.matchMedia('(max-width: 900px)').matches) setOpen(false);
+      if (!window.matchMedia('(max-width: 1080px)').matches) setOpen(false);
     });
   })();
 

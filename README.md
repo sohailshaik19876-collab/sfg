@@ -17,6 +17,7 @@ initiatives, the seven-step process and the leadership section all come from the
 | `facilities.html` | Swimming pool, shooting range, shared cricket & football turf + amenities |
 | `programs.html` | Who we train, coaching batches, training hours, fees, hourly turf booking |
 | `services.html` | Pool/turf/range construction, school affiliation, outsourced PE, certification |
+| `franchise.html` | Sports Excellence Centre partnership — model, eligibility, costs, how to apply |
 | `about.html` | Story, registration & recognition, mission/vision/aim, leadership, coaching team |
 | `gallery.html` | Photo grid with click-to-zoom lightbox |
 | `contact.html` | Enquiry form, map, opening hours, FAQs |
@@ -55,19 +56,20 @@ vercel --prod   # production
 ```
 
 `vercel.json` sets year-long caching on `/assets/*`, adds standard security headers, and
-redirects extensionless paths (`/contact`, `/services`, `/programmes`) to the right page.
+redirects extensionless paths (`/contact`, `/services`, `/franchise`, `/programmes`) to the
+right page, so tidy URLs on posters and business cards work.
 
 **Custom domain:** Vercel → Project → Settings → Domains. The site's canonical URL is
 already set to `https://skillforglory.in/`.
 
 ---
 
-## Photos — 11 frames still to fill
+## Photos — 9 frames still to fill
 
-Your photographs now cover the **home, facilities, programmes and contact pages
-completely**. The remaining frames show a branded gradient, a sport icon and a small
-*"Your photo here"* label until you supply a file — never a broken image. Save the photo
-at the exact path below and redeploy; no code change needed.
+Your photographs now cover the **home, facilities, programmes, franchise and contact
+pages completely**. The remaining frames show a branded gradient, a sport icon and a
+small *"Your photo here"* label until you supply a file — never a broken image. Save the
+photo at the exact path below and redeploy; no code change needed.
 
 | File to supply | Used on | What it should show |
 |---|---|---|
@@ -75,8 +77,6 @@ at the exact path below and redeploy; no code change needed.
 | `assets/img/coach-shooting.jpg` | about | Range officer |
 | `assets/img/coach-cricket.jpg` | about | Head cricket coach |
 | `assets/img/coach-football.jpg` | about | Head football coach |
-| `assets/img/construction-02.jpg` | services | Turf laying in progress |
-| `assets/img/construction-03.jpg` | services | Shooting range under construction |
 | `assets/img/school-sports.jpg` | services | A school sports session run by SFG coaches |
 | `assets/img/gallery-05.jpg` … `gallery-08.jpg` | gallery | Four free-choice photos — batches, events, prize days |
 
@@ -101,7 +101,11 @@ of the page source (or move them to the swimming section) — it is a two-line c
 ## The logo
 
 Header, footer and social-share images use the logo you supplied:
-`https://cdn.fitimg.in/studios/studio1779686291-jqatzyfwvochbxkngok5.jpg`
+`https://plinium.co.uk/wp-content/uploads/2026/08/Untitled-design-scaled.png`
+
+It is rendered larger than before — 68px tall in the header on wide screens, 70px in the
+footer — and the slots are aspect-ratio agnostic (fixed height, width follows), so a
+square emblem and a wide wordmark both render without stretching or cropping.
 
 If that URL is ever unreachable, every `<img>` falls back automatically to
 `assets/img/logo.svg`, a vector recreation of the emblem, so the header never renders
@@ -111,12 +115,9 @@ empty. The browser-tab icon uses the SVG, because it stays crisp at 16px.
 CDN means your site breaks if they move the file. Save it to `assets/img/logo.png`, then:
 
 ```bash
-grep -rl 'cdn.fitimg.in' . --include='*.html' \
-  | xargs sed -i 's|https://cdn.fitimg.in/studios/studio1779686291-jqatzyfwvochbxkngok5.jpg|assets/img/logo.png|g'
+grep -rl 'Untitled-design-scaled' . --include='*.html' \
+  | xargs sed -i 's|https://plinium.co.uk/wp-content/uploads/2026/08/Untitled-design-scaled.png|assets/img/logo.png|g'
 ```
-
-The logo slots are aspect-ratio agnostic — fixed height, width follows — so a square
-emblem and a wide wordmark both render without stretching.
 
 ---
 
