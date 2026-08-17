@@ -284,7 +284,7 @@
     // Screen readers should hear one stable phrase, not each keystroke.
     el.setAttribute('aria-label', phrases[0]);
 
-    var TYPE = 78, ERASE = 42, HOLD = 1900, GAP = 420;
+    var TYPE = 70, ERASE = 38, HOLD = 1500, GAP = 340, FIRST = 750;
     var pi = 0, ci = phrases[0].length, erasing = false;
 
     var step = function () {
@@ -306,7 +306,7 @@
       setTimeout(step, erasing ? ERASE : TYPE);
     };
 
-    setTimeout(step, HOLD);
+    setTimeout(step, FIRST);
   })();
 
   /* ---- 8. Footer year ---------------------------------------------------- */

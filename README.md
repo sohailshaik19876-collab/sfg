@@ -64,10 +64,11 @@ already set to `https://skillforglory.in/`.
 
 ---
 
-## Photos — 9 frames still to fill
+## Photos — 5 frames still to fill
 
-Your photographs now cover the **home, facilities, programmes, franchise and contact
-pages completely**. The remaining frames show a branded gradient, a sport icon and a
+Your photographs now cover the **home, facilities, programmes, franchise, gallery and
+contact pages completely** — the gallery placeholders have been removed and it now runs
+on 13 real photographs. The remaining frames show a branded gradient, a sport icon and a
 small *"Your photo here"* label until you supply a file — never a broken image. Save the
 photo at the exact path below and redeploy; no code change needed.
 
@@ -78,7 +79,6 @@ photo at the exact path below and redeploy; no code change needed.
 | `assets/img/coach-cricket.jpg` | about | Head cricket coach |
 | `assets/img/coach-football.jpg` | about | Head football coach |
 | `assets/img/school-sports.jpg` | services | A school sports session run by SFG coaches |
-| `assets/img/gallery-05.jpg` … `gallery-08.jpg` | gallery | Four free-choice photos — batches, events, prize days |
 
 **Recommended:** landscape, at least 1400px wide, JPEG, under ~400KB each. Coach cards
 can be square portraits.
@@ -168,7 +168,9 @@ To change the WhatsApp number, edit `data-whatsapp` on the same form.
 
 - Scroll progress bar across the top, driven by `requestAnimationFrame`.
 - Staggered reveal on scroll — fade-up, slide-left, slide-right and scale variants.
-- Animated hero entrance, a typing/erasing headline phrase, and counting statistics.
+- Animated hero entrance, a typing/erasing headline phrase (cycling *real glory →
+  real champions → real medals → real results* with a blinking caret), and counting
+  statistics. The headline reserves its width/height so nothing below it shifts.
 - Continuous marquee of the four sports offered (pauses on hover).
 - Smooth in-page anchor scrolling with the sticky header height accounted for.
 - **All of it is disabled** under `prefers-reduced-motion: reduce`, so visitors who get

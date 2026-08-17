@@ -1144,15 +1144,28 @@ td .pill { font-weight: 600; }
 /* =========================================================================
    36. Typing headline
    ========================================================================= */
-.typer { display: inline; white-space: nowrap; }
+.typer {
+  display: inline-block; white-space: nowrap;
+  /* Reserve the width of the longest phrase so the headline does not rewrap
+     on every keystroke. Released on small screens, where a fixed width would
+     push the line out of the viewport. */
+  min-width: 7.4em;
+}
+@media (max-width: 900px) {
+  /* A fixed width would overflow a phone, so reserve the tallest line count
+     instead — the headline then never pushes the content below it around. */
+  .typer { min-width: 0; }
+  .hero h1 { min-height: 3.5em; }
+}
 .typer__caret {
   display: inline-block;
-  width: 3px; height: .82em;
-  margin-left: .06em;
-  vertical-align: -.08em;
+  width: 4px; height: .9em;
+  margin-left: .08em;
+  vertical-align: -.1em;
   border-radius: 2px;
   background: var(--gold-400);
-  animation: caret 1.05s steps(1, end) infinite;
+  box-shadow: 0 0 12px rgba(255, 215, 94, .55);
+  animation: caret 1s steps(1, end) infinite;
 }
 @keyframes caret { 0%, 45% { opacity: 1; } 46%, 100% { opacity: 0; } }
 
