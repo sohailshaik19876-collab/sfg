@@ -118,12 +118,11 @@ of the page source (or move them to the swimming section) — it is a two-line c
 
 ## The logo
 
-Two logo files are in use, both supplied by you:
+One logo file is used everywhere — header, footer and the social-share fallback:
 
-| Slot | File |
-|---|---|
-| Header + social share | `.../Untitled-design-scaled.png` |
-| Footer | `.../Untitled-design-1-scaled.png` |
+```
+https://plinium.co.uk/wp-content/uploads/2026/08/Untitled-design-1-scaled.png
+```
 
 It is rendered larger than before — 68px tall in the header on wide screens, 70px in the
 footer — and the slots are aspect-ratio agnostic (fixed height, width follows), so a
@@ -137,12 +136,8 @@ empty. The browser-tab icon uses the SVG, because it stays crisp at 16px.
 CDN means your site breaks if they move the file. Save it to `assets/img/logo.png`, then:
 
 ```bash
-# header logo
-grep -rl 'Untitled-design-scaled' . --include='*.html' \
-  | xargs sed -i 's|https://plinium.co.uk/wp-content/uploads/2026/08/Untitled-design-scaled.png|assets/img/logo.png|g'
-# footer logo
 grep -rl 'Untitled-design-1-scaled' . --include='*.html' \
-  | xargs sed -i 's|https://plinium.co.uk/wp-content/uploads/2026/08/Untitled-design-1-scaled.png|assets/img/logo-footer.png|g'
+  | xargs sed -i 's|https://plinium.co.uk/wp-content/uploads/2026/08/Untitled-design-1-scaled.png|assets/img/logo.png|g'
 ```
 
 ### Wordmark
