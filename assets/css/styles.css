@@ -1266,3 +1266,25 @@ td .pill { font-weight: 600; }
 @media (max-width: 1180px) and (min-width: 1081px) {
   .brand__text { display: none; }
 }
+
+/* =========================================================================
+   44. Accreditation icons — set the stroke explicitly
+   These glyphs are drawn with stroke="currentColor", so they inherit whatever
+   `color` resolves to and are vulnerable to any ancestor rule that happens to
+   match. Painting `stroke` directly from CSS beats the presentation attribute
+   and removes the dependency on inheritance entirely.
+   ========================================================================= */
+.govbar__ico { color: var(--gold-400); }
+.govbar__ico svg {
+  width: 23px; height: 23px;
+  stroke: var(--gold-400);
+  stroke-width: 2;
+  fill: none;
+}
+.section--dark .govbar__ico svg { stroke: var(--gold-400); }
+
+/* =========================================================================
+   45. Brand lockup — drop the sub-line slightly clear of the name
+   ========================================================================= */
+.brand__text { line-height: 1.15; }
+.brand__sub { margin-top: .34rem; }
