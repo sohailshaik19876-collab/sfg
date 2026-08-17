@@ -176,6 +176,29 @@ To change the WhatsApp number, edit `data-whatsapp` on the same form.
 - **All of it is disabled** under `prefers-reduced-motion: reduce`, so visitors who get
   motion sickness see a static, fully readable page.
 
+### Scroll performance
+
+Native scrolling is left alone — no JavaScript scroll hijacking, which tends to fight the
+device's own momentum and break find-in-page. Instead the costs were removed:
+
+- The scroll-progress bar caches the page height and re-measures on resize via a
+  `ResizeObserver`, rather than reading `scrollHeight` on every frame (which forced a
+  synchronous layout ~60 times a second).
+- The sticky header is `requestAnimationFrame`-throttled and only touches the DOM when
+  its stuck state actually flips, instead of on every scroll event.
+- `backdrop-filter: blur()` is dropped on phones and touch devices, where re-compositing
+  a blurred strip each frame is the single biggest scroll cost. Desktop keeps it.
+- `text-rendering: optimizeLegibility` removed — it forces extra kerning work across a
+  long document for no visible gain.
+- `overflow-x: clip` on `<body>` instead of `hidden`, so the body is not turned into a
+  scroll container.
+- Photos decode off the main thread (`decoding="async"`) with width/height reserved, and
+  the hero image is marked `fetchpriority="high"`.
+- Sections far below the fold use `content-visibility: auto` with
+  `contain-intrinsic-size: auto`, so the browser skips rendering them until needed and
+  remembers their real height afterwards. Verified: document height stays constant while
+  scrolling (no scrollbar jumps) and in-page anchors still land exactly on target.
+
 ## Notes
 
 - **Responsive** from 320px up; verified at mobile and desktop widths with no horizontal

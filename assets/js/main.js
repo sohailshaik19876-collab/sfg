@@ -37,9 +37,19 @@
   (function stickyHeader() {
     var header = doc.querySelector('.site-header');
     if (!header) return;
-    var update = function () { header.classList.toggle('is-stuck', window.scrollY > 8); };
-    update();
-    on(window, 'scroll', update, { passive: true });
+
+    var stuck = null, queued = false;
+    var apply = function () {
+      queued = false;
+      var next = window.scrollY > 8;
+      if (next === stuck) return;          // no style recalc unless it changed
+      stuck = next;
+      header.classList.toggle('is-stuck', next);
+    };
+    apply();
+    on(window, 'scroll', function () {
+      if (!queued) { queued = true; requestAnimationFrame(apply); }
+    }, { passive: true });
   })();
 
   /* ---- 3. Photo fallback ------------------------------------------------
@@ -221,18 +231,27 @@
     var bar = doc.querySelector('.scroll-progress');
     if (!bar || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    var ticking = false;
+    var ticking = false, max = 0;
+
+    var measure = function () {
+      max = doc.documentElement.scrollHeight - window.innerHeight;
+      paint();
+    };
     var paint = function () {
-      var max = doc.documentElement.scrollHeight - window.innerHeight;
+      ticking = false;
       var p = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
       bar.style.transform = 'scaleX(' + p + ')';
-      ticking = false;
     };
+
     on(window, 'scroll', function () {
       if (!ticking) { ticking = true; requestAnimationFrame(paint); }
     }, { passive: true });
-    on(window, 'resize', paint, { passive: true });
-    paint();
+    on(window, 'resize', measure, { passive: true });
+
+    // Re-measure when the page itself changes height (images arriving, an FAQ
+    // opening) rather than paying for a layout read on every single frame.
+    if ('ResizeObserver' in window) new ResizeObserver(measure).observe(doc.body);
+    measure();
   })();
 
   /* ---- 10. Marquee ------------------------------------------------------
@@ -266,6 +285,7 @@
         mirror.appendChild(c);
       });
       track.appendChild(mirror);
+      track.style.willChange = 'transform';
     });
   })();
 

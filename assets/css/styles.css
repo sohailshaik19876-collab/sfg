@@ -70,8 +70,10 @@ body {
   color: var(--ink-soft);
   background: var(--surface);
   -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
+  /* overflow-x: clip contains the overflow without making <body> a scroll
+     container, which keeps sticky positioning and scrolling cheap. */
   overflow-x: hidden;
+  overflow-x: clip;
 }
 
 img, svg, video { display: block; max-width: 100%; height: auto; }
@@ -1288,3 +1290,40 @@ td .pill { font-weight: 600; }
    ========================================================================= */
 .brand__text { line-height: 1.15; }
 .brand__sub { margin-top: .34rem; }
+
+/* =========================================================================
+   46. Scrolling performance
+   ========================================================================= */
+
+/* A blurred backdrop on a sticky header has to re-composite a blurred strip
+   on every scrolled frame. It is cheap on a desktop GPU and expensive on a
+   phone, so keep it only where there is a real pointer and enough room. */
+@media (max-width: 900px), (hover: none) {
+  .site-header {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(255, 255, 255, .97);
+  }
+  .hero__badge { backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .hero__stat { backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .section--dark .icard { backdrop-filter: none; -webkit-backdrop-filter: none; }
+}
+
+/* Promote the always-running marquee to its own layer so it never repaints
+   the section behind it. */
+.marquee__track { will-change: transform; }
+.marquee { contain: paint; }
+
+/* Photographs are decoded off the main thread and their boxes are reserved by
+   width/height, so a late-arriving image cannot reflow the page under you. */
+.media > img { content-visibility: auto; }
+
+/* Skip rendering work for sections far below the fold. `auto` lets the browser
+   remember each section's real height after first paint, so the scrollbar does
+   not jump the way a fixed estimate would. */
+@media (prefers-reduced-motion: no-preference) {
+  main > section:nth-child(n + 5) {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 720px;
+  }
+}
