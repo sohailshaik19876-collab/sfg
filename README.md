@@ -205,5 +205,25 @@ device's own momentum and break find-in-page. Instead the costs were removed:
   scroll on any page.
 - **Accessible** — skip link, keyboard-operable nav and lightbox, visible focus rings,
   labelled form fields, `alt` on every image.
-- **SEO** — per-page titles and descriptions, Open Graph tags, `SportsActivityLocation`
-  structured data with parent organisation and founder, and `FAQPage` data on contact.
+- **SEO** — per-page titles and descriptions, `SportsActivityLocation` structured data
+  with parent organisation and founder, and `FAQPage` data on contact.
+
+### Link previews (WhatsApp, Facebook, X)
+
+Every page carries a full Open Graph set — `og:title`, `og:description`, `og:url`,
+`og:site_name`, `og:locale`, `og:image`, `og:image:secure_url` and `og:image:alt` — plus
+matching Twitter card tags. All image URLs are absolute `https://`, which is required:
+WhatsApp silently drops relative ones.
+
+The **home page shares the logo** with a short title and a description written to fit a
+chat bubble, so a shared link shows the academy name, what you offer and the phone number.
+Inner pages share the campus banner instead, since a wide photo suits their larger preview.
+
+Two things worth knowing:
+
+- **WhatsApp caches previews hard.** After changing these tags, an already-shared link may
+  keep showing the old preview for a long time. Test with a fresh URL (add `?v=2`), or
+  clear the cache via Facebook's Sharing Debugger, which WhatsApp also honours.
+- **The preview image must be publicly reachable.** It currently points at
+  `plinium.co.uk`. If that host blocks scrapers or the file moves, the preview loses its
+  image. Hosting the logo on your own domain (see *The logo* above) removes that risk.

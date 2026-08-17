@@ -888,7 +888,6 @@ td .pill { font-weight: 600; }
   .hero__seal { display: none; }
   .btn { padding: .85rem 1.4rem; }
   .topbar__tag { display: none; }
-  .callfab span { display: none; }
   .callfab { padding: 1rem; }
 }
 
@@ -1326,4 +1325,57 @@ td .pill { font-weight: 600; }
     content-visibility: auto;
     contain-intrinsic-size: auto 720px;
   }
+}
+
+/* =========================================================================
+   47. Map actions
+   ========================================================================= */
+.map-actions { justify-content: center; margin-top: 1.6rem; }
+
+/* =========================================================================
+   48. WhatsApp button — pulsing rings
+   The rings start on the button's edge and travel outward, so they never
+   cover the label. Both animate transform/opacity only, which the compositor
+   handles without repainting the page underneath while scrolling.
+   ========================================================================= */
+.callfab { isolation: isolate; }
+.callfab__icon { display: grid; place-items: center; }
+.callfab__label { display: inline; }
+
+.callfab::before,
+.callfab::after {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: 999px;
+  border: 2px solid rgba(255, 255, 255, .55);
+  pointer-events: none;
+  opacity: 0;
+  animation: fabRing 2.8s cubic-bezier(.22, .61, .36, 1) infinite;
+}
+.callfab::after { animation-delay: 1.1s; }
+
+@keyframes fabRing {
+  0%   { transform: scale(1);    opacity: .7; }
+  65%  { transform: scale(1.55); opacity: 0; }
+  100% { transform: scale(1.55); opacity: 0; }
+}
+
+/* A slow nudge so the button reads as live without being distracting. */
+.callfab svg { animation: fabNudge 3.4s ease-in-out infinite; }
+@keyframes fabNudge {
+  0%, 78%, 100% { transform: rotate(0) scale(1); }
+  84%           { transform: rotate(-12deg) scale(1.08); }
+  90%           { transform: rotate(10deg)  scale(1.08); }
+  95%           { transform: rotate(-4deg)  scale(1.03); }
+}
+
+.callfab:hover::before, .callfab:hover::after { animation-play-state: paused; }
+.callfab:hover svg { animation-play-state: paused; }
+
+@media (prefers-reduced-motion: reduce) {
+  .callfab::before, .callfab::after, .callfab svg { animation: none; }
+}
+
+@media (max-width: 620px) {
+  .callfab__label { display: none; }
 }
