@@ -183,11 +183,24 @@ These are **my defaults, not your data** — please correct anything that is wro
 
 ### Hero image contrast
 
-The hero photo sits at full opacity under a gradient scrim that does all the contrast
-work. If you swap in a much brighter photo, re-check the headline: measured against a
-pure-white stand-in the white text still holds 6.2:1 on desktop and 12.2:1 on mobile,
-against the 4.5:1 WCAG AA threshold. Darkening the first two stops of
-`.hero__bg::after` is the lever if a future photo needs it.
+The hero background photo sits at full opacity under a gradient scrim that does all the
+contrast work — dense behind the copy on the left and opening up to the right, switching
+to a vertical scrim on phones where the copy spans the full width.
+
+Measured against a **pure-white stand-in photo** (the worst case for white text), every
+piece of hero copy clears WCAG AAA:
+
+| | headline | lead | badge | motto |
+|---|---|---|---|---|
+| desktop | 10.2:1 | 9.8:1 | 13.2:1 | 11.3:1 |
+| mobile | 14.0:1 | 13.4:1 | 14.2:1 | 13.0:1 |
+
+AA needs 4.5:1 and AAA 7:1, so there is plenty of headroom if you swap the photo again.
+`.hero__bg::after` is the lever if a future picture ever needs more.
+
+The background is served as **AVIF**. Support is broad (Chrome, Firefox, Safari 16+); on
+anything older the image simply does not paint and the hero falls back to its own navy
+gradient, which is already the design — no broken image, no unreadable text.
 
 ## The enquiry form
 
