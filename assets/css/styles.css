@@ -1339,7 +1339,7 @@ td .pill { font-weight: 600; }
    handles without repainting the page underneath while scrolling.
    ========================================================================= */
 .callfab { isolation: isolate; }
-.callfab__icon { display: grid; place-items: center; }
+.callfab__icon { display: grid !important; place-items: center; flex: none; }
 .callfab__label { display: inline; }
 
 .callfab::before,
@@ -1361,7 +1361,7 @@ td .pill { font-weight: 600; }
 }
 
 /* A slow nudge so the button reads as live without being distracting. */
-.callfab svg { animation: fabNudge 3.4s ease-in-out infinite; }
+.callfab__icon { animation: fabNudge 3.4s ease-in-out infinite; }
 @keyframes fabNudge {
   0%, 78%, 100% { transform: rotate(0) scale(1); }
   84%           { transform: rotate(-12deg) scale(1.08); }
@@ -1370,10 +1370,10 @@ td .pill { font-weight: 600; }
 }
 
 .callfab:hover::before, .callfab:hover::after { animation-play-state: paused; }
-.callfab:hover svg { animation-play-state: paused; }
+.callfab:hover .callfab__icon { animation-play-state: paused; }
 
 @media (prefers-reduced-motion: reduce) {
-  .callfab::before, .callfab::after, .callfab svg { animation: none; }
+  .callfab::before, .callfab::after, .callfab__icon { animation: none; }
 }
 
 @media (max-width: 620px) {

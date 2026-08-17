@@ -27,8 +27,25 @@ assets/
   css/styles.css   — design system (brand tokens, components, animations, responsive)
   js/main.js       — nav, scroll progress, reveals, counters, marquee, lightbox, form
   img/logo.svg     — vector fallback of the academy emblem
+  img/og-image.jpg — 1200x630 link-preview card
 vercel.json        — caching, security headers, tidy-URL redirects
 ```
+
+### Cache busting — important
+
+`/assets/*` is served `immutable` for a year, so the stylesheet and script URLs carry a
+hash of their own contents:
+
+```html
+<link rel="stylesheet" href="assets/css/styles.css?v=8a004d36b9">
+```
+
+Without that, a returning visitor keeps the cached CSS **for a year** while the HTML
+updates normally — which shows up as new markup styled by an old stylesheet, and looks
+like a broken component rather than a caching problem.
+
+**If you edit `styles.css` or `main.js` by hand, bump the `?v=` value in all eight HTML
+files.** Any different string works; it only has to change.
 
 ## Typography
 
@@ -55,7 +72,8 @@ vercel          # preview deployment
 vercel --prod   # production
 ```
 
-`vercel.json` sets year-long caching on `/assets/*`, adds standard security headers, and
+`vercel.json` sets year-long immutable caching on `/assets/*`, adds standard security
+headers, and
 redirects extensionless paths (`/contact`, `/services`, `/franchise`, `/programmes`) to the
 right page, so tidy URLs on posters and business cards work.
 
