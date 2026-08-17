@@ -210,20 +210,42 @@ device's own momentum and break find-in-page. Instead the costs were removed:
 
 ### Link previews (WhatsApp, Facebook, X)
 
-Every page carries a full Open Graph set — `og:title`, `og:description`, `og:url`,
-`og:site_name`, `og:locale`, `og:image`, `og:image:secure_url` and `og:image:alt` — plus
-matching Twitter card tags. All image URLs are absolute `https://`, which is required:
-WhatsApp silently drops relative ones.
+Sharing any page shows the academy name, a one-line description and a branded image.
 
-The **home page shares the logo** with a short title and a description written to fit a
-chat bubble, so a shared link shows the academy name, what you offer and the phone number.
-Inner pages share the campus banner instead, since a wide photo suits their larger preview.
+**The preview image is `assets/img/og-image.jpg`** — a purpose-built 1200×630 card
+(111KB) carrying the emblem, the academy name, the three facilities, the motto and the
+phone number. It is generated and committed, not fetched from anywhere at runtime.
 
-Two things worth knowing:
+Why a dedicated card rather than the logo file:
 
-- **WhatsApp caches previews hard.** After changing these tags, an already-shared link may
-  keep showing the old preview for a long time. Test with a fresh URL (add `?v=2`), or
-  clear the cache via Facebook's Sharing Debugger, which WhatsApp also honours.
-- **The preview image must be publicly reachable.** It currently points at
-  `plinium.co.uk`. If that host blocks scrapers or the file moves, the preview loses its
-  image. Hosting the logo on your own domain (see *The logo* above) removes that risk.
+- **WhatsApp silently drops preview images much over ~600KB.** The logo on `plinium.co.uk`
+  is a WordPress `-scaled` PNG, meaning the original was over 2560px wide — very likely
+  far too large. A link with an oversized image shows title and description but *no
+  picture*, which is exactly the failure that is easy to misread as "SEO not working".
+- **1200×630 with `og:image:width`/`height` declared** is what makes WhatsApp render the
+  large banner preview instead of a small square thumbnail.
+- **Self-hosted** means no third-party host can move, resize or block the file.
+
+Each page declares the card first and the original photo second. Open Graph allows
+multiple `og:image` tags and scrapers fall through to the next one, so if the primary URL
+is not reachable yet the preview still gets an image.
+
+#### If the preview looks wrong
+
+1. **Check the deployment actually has the tags.** View source on the live page and search
+   for `og:image`. If it is missing, Vercel is serving an older commit — that is the most
+   common cause by far.
+2. **`SITE` must match the domain you are sharing.** The tags use
+   `https://skillforglory.in/…`. If you are still on the temporary `*.vercel.app` URL,
+   change the `SITE` constant and rebuild, or the image URL points at a host that is not
+   live yet.
+3. **WhatsApp caches previews hard.** An already-shared link can keep showing the old
+   preview for days. Test with a fresh URL (`?v=2`), or clear it through Facebook's
+   Sharing Debugger, which WhatsApp honours.
+4. **If you replace the card**, change its filename too (`og-image-2.jpg`). `/assets/*` is
+   served with a one-year immutable cache, so reusing the name will keep serving the old
+   image.
+
+To regenerate the card, edit the source at `assets/img/og-image.jpg` in any image editor —
+keep it 1200×630 and under ~300KB.
+
