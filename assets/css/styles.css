@@ -1136,3 +1136,41 @@ td .pill { font-weight: 600; }
 .rail--light li::before { box-shadow: 0 0 0 6px var(--surface-tint); }
 .rail--light h4 { color: var(--navy-900); }
 .rail--light p { color: var(--ink-soft); }
+
+/* =========================================================================
+   36. Typing headline
+   ========================================================================= */
+.typer { display: inline; white-space: nowrap; }
+.typer__caret {
+  display: inline-block;
+  width: 3px; height: .82em;
+  margin-left: .06em;
+  vertical-align: -.08em;
+  border-radius: 2px;
+  background: var(--gold-400);
+  animation: caret 1.05s steps(1, end) infinite;
+}
+@keyframes caret { 0%, 45% { opacity: 1; } 46%, 100% { opacity: 0; } }
+
+/* =========================================================================
+   37. Inline icon sizing
+   Any icon sitting inline with text needs an explicit box, otherwise the
+   SVG falls back to its intrinsic 300px and dwarfs the label.
+   ========================================================================= */
+.tagpill svg      { width: 16px; height: 16px; flex: none; }
+.leader__role svg { width: 15px; height: 15px; flex: none; }
+.marquee__item svg{ width: 19px; height: 19px; flex: none; color: var(--gold-400); }
+.govbar__ico svg  { width: 21px; height: 21px; }
+.svc > svg, .icard > svg { width: 24px; height: 24px; }
+
+/* A little more presence for the accreditation row */
+.govbar__item { padding: 1.5rem 1.45rem; }
+.govbar__ico  { width: 44px; height: 44px; border-radius: 12px; }
+
+/* Four sports only — space them out so the strip does not read as a list */
+.marquee__item { padding-inline: 2rem; font-size: 1.02rem; font-weight: 600; }
+.marquee__item::after { width: 6px; height: 6px; margin-left: 1.1rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  .typer__caret { animation: none; opacity: 1; }
+}

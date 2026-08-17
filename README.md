@@ -14,8 +14,8 @@ initiatives, the seven-step process and the leadership section all come from the
 | File | Purpose |
 |---|---|
 | `index.html` | Home — hero, recognition, facilities, services, why-us, process, founder, testimonials |
-| `facilities.html` | Swimming pool, shooting range, cricket turf, football turf + campus amenities |
-| `programs.html` | Who we train, coaching batches, weekly timetable, fees, hourly turf booking |
+| `facilities.html` | Swimming pool, shooting range, shared cricket & football turf + amenities |
+| `programs.html` | Who we train, coaching batches, training hours, fees, hourly turf booking |
 | `services.html` | Pool/turf/range construction, school affiliation, outsourced PE, certification |
 | `about.html` | Story, registration & recognition, mission/vision/aim, leadership, coaching team |
 | `gallery.html` | Photo grid with click-to-zoom lightbox |
@@ -62,39 +62,41 @@ already set to `https://skillforglory.in/`.
 
 ---
 
-## Photos — 24 slots waiting for your images
+## Photos — 11 frames still to fill
 
-Five photographs you supplied are already live across the site: the campus banner, the
-swimming pool, the shooting range, the cricket turf, and the Managing Director's portrait.
-
-The frames below are **reserved and styled but empty**. Until you supply a file, each one
-shows a branded gradient, a sport icon and a small *"Your photo here"* label — never a
-broken image. To fill one: save your photo at the exact path shown and redeploy. No code
-change needed.
+Your photographs now cover the **home, facilities, programmes and contact pages
+completely**. The remaining frames show a branded gradient, a sport icon and a small
+*"Your photo here"* label until you supply a file — never a broken image. Save the photo
+at the exact path below and redeploy; no code change needed.
 
 | File to supply | Used on | What it should show |
 |---|---|---|
-| `assets/img/football-turf.jpg` | index, facilities | The football turf — the main hero shot for it |
-| `assets/img/football-02.jpg` | facilities | Five-a-side match on the turf |
-| `assets/img/football-03.jpg` | facilities | Junior football coaching session |
-| `assets/img/pool-02.jpg` | facilities | Swimming coaching in progress |
-| `assets/img/pool-03.jpg` | facilities | Changing rooms / pool deck |
-| `assets/img/range-02.jpg` | facilities | Shooters on the firing line |
-| `assets/img/range-03.jpg` | facilities | Target scoring after a relay |
-| `assets/img/cricket-02.jpg` | facilities | Batting practice in the nets |
-| `assets/img/cricket-03.jpg` | facilities | Evening match under floodlights |
-| `assets/img/construction-02.jpg` | services | Turf laying in progress |
-| `assets/img/construction-03.jpg` | services | Shooting range under construction |
-| `assets/img/school-sports.jpg` | services | A school sports session run by SFG coaches |
 | `assets/img/coach-swimming.jpg` | about | Head swimming coach |
 | `assets/img/coach-shooting.jpg` | about | Range officer |
 | `assets/img/coach-cricket.jpg` | about | Head cricket coach |
 | `assets/img/coach-football.jpg` | about | Head football coach |
-| `assets/img/gallery-01.jpg` … `gallery-08.jpg` | gallery | Eight free-choice photos — turf, batches, events, prize days |
+| `assets/img/construction-02.jpg` | services | Turf laying in progress |
+| `assets/img/construction-03.jpg` | services | Shooting range under construction |
+| `assets/img/school-sports.jpg` | services | A school sports session run by SFG coaches |
+| `assets/img/gallery-05.jpg` … `gallery-08.jpg` | gallery | Four free-choice photos — batches, events, prize days |
 
-**Recommended:** landscape, at least 1400px wide, JPEG, under ~400KB each. Portraits for
-the coach cards can be square. Keep the `alt` text in the HTML descriptive if you change
-what a photo shows — it matters for search ranking and screen readers.
+**Recommended:** landscape, at least 1400px wide, JPEG, under ~400KB each. Coach cards
+can be square portraits.
+
+### ⚠️ Check the shooting range photos
+
+Two images are wired into the **shooting range** section on `facilities.html` and the
+gallery because that is how they were supplied — but their filenames read
+`...swimming-pool-puyni-nanded...`:
+
+```
+...swimming-pool-puyni-nanded-sports-clubs-lunkg5wnbs-250-1.avif
+...swimming-pool-puyni-nanded-sports-clubs-d3dwvex0l4-250.webp
+```
+
+They may in fact be pool photographs. Open the deployed shooting range section and check.
+If they are pool shots, swap the `shoot2` / `shoot3` values in the image list at the top
+of the page source (or move them to the swimming section) — it is a two-line change.
 
 ## The logo
 
@@ -126,10 +128,11 @@ process, the leadership names, and all contact details.
 
 These are **my defaults, not your data** — please correct anything that is wrong:
 
-1. **Opening hours** — currently *daily, 6:00 AM – 9:00 PM*. Appears in the header,
-   footer, `contact.html` and the structured data.
-2. **Batch timings** — the weekly table in `programs.html` (`#timetable`) is a plausible
-   schedule, not your real one.
+1. **Opening hours** — set to *daily, 6:00 AM – 10:00 PM*, matching your Google listing.
+   Appears in the header, footer, `contact.html` and the structured data.
+2. **Batch timings** — the invented weekly timetable has been removed. The site now says
+   the grounds are open 6:00 AM – 10:00 PM daily and that batch times are agreed on
+   enrolment. Confirm that matches how you actually operate.
 3. **Fees** — deliberately left as *"On request"* rather than inventing prices.
 4. **Coach names** — `about.html` (`#coaches`) uses role titles only, with no invented
    names or credentials. Add the real ones.
@@ -139,8 +142,8 @@ These are **my defaults, not your data** — please correct anything that is wro
    *Mohammed Asif Umar, Managing Director*. Confirm the photograph is of him and not of
    Mr. Mohammed Arif, the Founder President of AITO, whose message appears separately
    further down the About page.
-7. **Social links** — footer points at `/Skillforglory` on Facebook, Instagram and
-   YouTube. Correct the handles if any differ.
+7. **Social links** — footer points at `/Skillforglory` on Facebook and Instagram.
+   Correct the handles if either differs.
 8. **Age ranges** in `programs.html` — check they match who you actually take.
 
 ## The enquiry form
@@ -164,8 +167,8 @@ To change the WhatsApp number, edit `data-whatsapp` on the same form.
 
 - Scroll progress bar across the top, driven by `requestAnimationFrame`.
 - Staggered reveal on scroll — fade-up, slide-left, slide-right and scale variants.
-- Animated hero entrance and counting statistics.
-- Continuous sports marquee listing every discipline (pauses on hover).
+- Animated hero entrance, a typing/erasing headline phrase, and counting statistics.
+- Continuous marquee of the four sports offered (pauses on hover).
 - Smooth in-page anchor scrolling with the sticky header height accounted for.
 - **All of it is disabled** under `prefers-reduced-motion: reduce`, so visitors who get
   motion sickness see a static, fully readable page.

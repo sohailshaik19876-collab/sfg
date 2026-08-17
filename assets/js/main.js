@@ -242,10 +242,71 @@
     all('.marquee__track').forEach(function (track) {
       var group = track.querySelector('.marquee__group');
       if (!group) return;
-      var clone = group.cloneNode(true);
-      clone.setAttribute('aria-hidden', 'true');
-      track.appendChild(clone);
+
+      // The -50% keyframe only loops seamlessly when the track is exactly
+      // two identical halves, and each half must be at least as wide as the
+      // container. With only four sports one group is far too narrow, so
+      // work out how many copies a half needs, then mirror the whole half.
+      var containerW = track.parentElement.offsetWidth || window.innerWidth;
+      var groupW = group.scrollWidth || 1;
+      var perHalf = Math.max(1, Math.ceil(containerW / groupW) + 1);
+
+      var half = document.createDocumentFragment();
+      for (var i = 1; i < perHalf; i++) {
+        var extra = group.cloneNode(true);
+        extra.setAttribute('aria-hidden', 'true');
+        half.appendChild(extra);
+      }
+      track.appendChild(half);
+
+      var mirror = document.createDocumentFragment();
+      all('.marquee__group', track).forEach(function (g) {
+        var c = g.cloneNode(true);
+        c.setAttribute('aria-hidden', 'true');
+        mirror.appendChild(c);
+      });
+      track.appendChild(mirror);
     });
+  })();
+
+  /* ---- 11. Typing headline ---------------------------------------------
+     Types a phrase, holds it, deletes it, moves to the next. The element
+     ships with real text inside it, so if this never runs — no JS, or
+     reduced motion — the headline still reads correctly.                  */
+  (function typer() {
+    var el = doc.querySelector('.typer__text');
+    if (!el) return;
+
+    var phrases = (el.getAttribute('data-typer') || '').split('|').filter(Boolean);
+    if (phrases.length < 2) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    // Screen readers should hear one stable phrase, not each keystroke.
+    el.setAttribute('aria-label', phrases[0]);
+
+    var TYPE = 78, ERASE = 42, HOLD = 1900, GAP = 420;
+    var pi = 0, ci = phrases[0].length, erasing = false;
+
+    var step = function () {
+      var word = phrases[pi];
+
+      if (!erasing && ci === word.length) {
+        erasing = true;
+        return setTimeout(step, HOLD);
+      }
+      if (erasing && ci === 0) {
+        erasing = false;
+        pi = (pi + 1) % phrases.length;
+        return setTimeout(step, GAP);
+      }
+
+      ci += erasing ? -1 : 1;
+      el.firstChild ? (el.firstChild.nodeValue = word.slice(0, ci))
+                    : (el.textContent = word.slice(0, ci));
+      setTimeout(step, erasing ? ERASE : TYPE);
+    };
+
+    setTimeout(step, HOLD);
   })();
 
   /* ---- 8. Footer year ---------------------------------------------------- */
