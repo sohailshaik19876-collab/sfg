@@ -1400,3 +1400,50 @@ td .pill { font-weight: 600; }
 @media (max-width: 620px) {
   .callfab__label { display: none; }
 }
+
+/* =========================================================================
+   49. Footer affiliations strip
+   Third-party marks sit on white chips: governing-body logos are drawn for
+   light backgrounds and lose their colour against the navy footer. Where a
+   logo file is not present the chip falls back to a plain text credit, which
+   is a legitimate way to show an affiliation rather than a broken slot.
+   ========================================================================= */
+.affil {
+  border-top: 1px solid rgba(255, 255, 255, .1);
+  margin-top: .5rem;
+  padding-top: 2rem;
+}
+.affil__list {
+  display: flex; flex-wrap: wrap; gap: .9rem;
+  margin-top: .25rem;
+}
+.affil__item {
+  display: grid; place-items: center;
+  min-width: 140px; max-width: 220px; min-height: 78px;
+  padding: .8rem 1.15rem;
+  background: #fff;
+  border-radius: var(--r-md);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .18);
+}
+.affil__item img {
+  max-height: 46px; width: auto; max-width: 100%;
+  object-fit: contain;
+}
+.affil__name {
+  display: none;
+  font-family: var(--font-display); font-weight: 600;
+  font-size: .78rem; line-height: 1.32; text-align: center;
+  color: var(--navy-800);
+}
+/* Revealed by the img's onerror when no logo file is in place yet. */
+.affil__item.is-text .affil__name { display: block; }
+
+.affil__note {
+  margin-top: 1rem;
+  font-size: .82rem;
+  color: rgba(255, 255, 255, .5);
+}
+
+@media (max-width: 620px) {
+  .affil__item { min-width: calc(50% - .45rem); padding: .75rem .9rem; }
+}

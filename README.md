@@ -29,6 +29,7 @@ assets/
   img/logo.svg     — vector fallback of the academy emblem
   img/og-image.jpg — 1200x630 link-preview card
 vercel.json        — caching, security headers, tidy-URL redirects
+bump-assets.sh     — re-stamps the ?v= cache-busting hashes after a CSS/JS edit
 ```
 
 ### Cache busting — important
@@ -44,8 +45,8 @@ Without that, a returning visitor keeps the cached CSS **for a year** while the 
 updates normally — which shows up as new markup styled by an old stylesheet, and looks
 like a broken component rather than a caching problem.
 
-**If you edit `styles.css` or `main.js` by hand, bump the `?v=` value in all eight HTML
-files.** Any different string works; it only has to change.
+**If you edit `styles.css` or `main.js` by hand, run `./bump-assets.sh`.** It re-stamps
+both hashes across all eight HTML files from the files' own checksums.
 
 ## Typography
 
@@ -139,6 +140,29 @@ CDN means your site breaks if they move the file. Save it to `assets/img/logo.pn
 grep -rl 'Untitled-design-1-scaled' . --include='*.html' \
   | xargs sed -i 's|https://plinium.co.uk/wp-content/uploads/2026/08/Untitled-design-1-scaled.png|assets/img/logo.png|g'
 ```
+
+### Footer affiliations strip
+
+The footer carries an **Affiliations & recognition** strip. Each entry is a white chip —
+governing-body logos are drawn for light backgrounds and would lose their colour against
+the navy footer.
+
+**It currently shows one entry, as a text credit, because no logo files exist yet.**
+If a logo file is missing the chip falls back to the organisation's name rather than a
+broken image, which is a legitimate way to show an affiliation.
+
+To finish it:
+
+1. Save each logo to `assets/img/` — `affil-nrai.png`, `affil-2.png`, `affil-3.png`.
+   Transparent PNG or SVG, roughly 300px wide, trimmed of surrounding whitespace.
+2. In every HTML file, uncomment the template `<li>` inside `.affil__list` and set the
+   organisation's name in **both** the `alt` attribute and the `.affil__name` span.
+3. Run `./bump-assets.sh` if you touched the CSS or JS.
+
+**A note on using other organisations' logos:** displaying a governing body's mark states
+a relationship with them. Most such bodies require written permission and have rules about
+how their logo may be shown. The strip carries the line *"Shown with the permission of the
+respective organisations"* — make sure that is actually true before publishing.
 
 ### Wordmark
 
